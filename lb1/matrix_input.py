@@ -1,62 +1,74 @@
 import os
 import random
-n  = 0
-def hand_matrix_input(): # Ручной ввод матрицы
 
+def hand_matrix_input():
     while True:
         try:
-            n = int(input("Введите размерность матрицы, не превышающую 20\n"))
+            n = int(input("Enter the dimension of the matrix, not exceeding 20\n"))
         except ValueError:
-            print("Введено некорректное значение")
+            print("Incorrect value entered")
             continue
-        if (0<=n)and(n<=20):
+        if 0 <= n <= 20:
             break
         else:  
-            print("Введено некорректное значение(Матрица должнабыть от 0 до 20)")
-        
-    print("Введено число :", n)
+            print("Incorrect value entered (Matrix must be from 0 to 20)")
+
+    print("Entered number:", n)
     matrix = []
-    print("Введите матрицу. Вводите построчно, элементы разделяя пробелами")
+    print("Enter the matrix. Enter row by row, separating elements by spaces")
     for i in range(n):
         while True:
+            row = []
             try:
-                matrix_stroke = list(map(int, input(f"Введите {n} элементов для {i+1}-й строки, разделенных пробелом: ").replace(",",".").split()))
-                # print(matrix_stroke)
+                matrix_row = input(f"Enter {n+1} elements for the {i + 1}-th row, separated by spaces: ").replace(",", ".").split()
+                row = list(map(int, matrix_row))
             except ValueError:
-                print("Введено некорректно число")
-                continue
+                for item in matrix_row:
+                    try:
+                        number_float = float(item)
+                        if number_float.is_integer(): 
+                            row.append(int(number_float)) 
+                        else:
+                            row.append(number_float) 
+                    except ValueError:
+                        if(isinstance(item, float)):
+                            row.append(float(item))
+                        else:
+                            print("Incorrect number entered")
+                            continue
+                
             except UnboundLocalError:
-                print("Введено некорректно число")
+                print("Incorrect number entered")
                 continue
             
-            if len(matrix_stroke )!= n+1:
-                print("Строка введена некорреткно")
+            if len(row) != n + 1:
+                print("The row was entered incorrectly")
                 continue
-            matrix.append(matrix_stroke)
+            matrix.append(row)
             break
-    
     
     return matrix
 
 def is_square_matrix(matrix):
     n = len(matrix)
     for row in matrix:
-        if len(row) != n+1:
+        if len(row) != n + 1:
             return False
     return True
 
 def print_matrix(matrix):
     for row in matrix:
-        for i,elem in enumerate(row):
-            if(i== len(row)-1):
+        for i, elem in enumerate(row):
+            if i == len(row) - 1:
                 print("|", end=" ")
             print(elem, end=" ")
         print()
     print()
+
 def print_matrix_float(matrix):
     for row in matrix:
-        for i,elem in enumerate(row):
-            if(i== len(row)-1):
+        for i, elem in enumerate(row):
+            if i == len(row) - 1:
                 print("|", end=" ")
             print(float(elem), end=" ") 
         print()
@@ -67,14 +79,14 @@ def open_file_matrix():
     matrix = []
     while True:
         try:
-            file_name = input("Введите относительный путь до вашего файла\n")
+            file_name = input("Enter the relative path to your file\n")
             print()
             file_path = os.path.join(current_working_directory, file_name)
             with open(file_path, 'r', encoding="utf-8") as file:
                 for line in file:
                     row = []
                     try:
-                        row = list(map(int, line.strip().replace(",",".").split()))
+                        row = list(map(int, line.strip().replace(",", ".").split()))
                     except ValueError:
                         for item in line.strip().replace(",", ".").split():
                             try:
@@ -88,40 +100,47 @@ def open_file_matrix():
                     matrix.append(row)
                 break
         except FileNotFoundError:
-            print("Введён неправильный путь к файлу")
+            print("Incorrect file path entered")
             continue
         except ValueError:
-            print("Некорректные коэффициенты в указанном файле")
+            print("Incorrect coefficients in the specified file")
             exit()
-    if (not is_square_matrix(matrix)):
-        print("Матрица в файле не явлеется квадратной")
+    if not is_square_matrix(matrix):
+        print("The matrix in the file is not square")
         exit()
     return matrix
+
 def print_answers(row):
     answer = ""
     for elem in range(len(row)):
-        answer += "x" + str(elem+1) + " = " + str(row[elem])+"  "
+        answer += "x" + str(elem + 1) + " = " + str(row[elem]) + "  "
+    print(answer)
+
+def print_residuals(residuales):
+    answer = ""
+    for elem in range(len(residuales)):
+        answer += "r" + str(elem + 1) + " = " + str(residuales[elem]) + "  "
     print(answer)
 
 def random_matrix():
     while True:
         try:
-            n = int(input("Введите размерность матрицы, не превышающую 20\n"))
+            n = int(input("Enter the dimension of the matrix, not exceeding 20\n"))
         except ValueError:
-            print("Введено некорректное значение")
+            print("Incorrect value entered")
             continue
-        if (0<=n)and(n<=20):
+        if 0 <= n <= 20:
             break
         else:  
-            print("Введено некорректное значение(Матрица должнабыть от 0 до 20)")
+            print("Incorrect value entered (Matrix must be from 0 to 20)")
     matrix = []
     for i in range(n):
         row =[]
-        for i in range(n+1):
+        for i in range(n + 1):
             if random.random() < 0.5:
                 row.append(random.randint(-10, 100))
             else:
                 row.append(random.uniform(-10, 100))
 
         matrix.append(row)
-    return matrix   
+    return matrix
