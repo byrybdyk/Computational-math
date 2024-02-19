@@ -1,4 +1,5 @@
 import os
+import random
 n  = 0
 def hand_matrix_input(): # Ручной ввод матрицы
 
@@ -46,14 +47,18 @@ def is_square_matrix(matrix):
 
 def print_matrix(matrix):
     for row in matrix:
-        for elem in row:
+        for i,elem in enumerate(row):
+            if(i== len(row)-1):
+                print("|", end=" ")
             print(elem, end=" ")
         print()
     print()
 def print_matrix_float(matrix):
     for row in matrix:
-        for elem in row:
-            print(float(elem), end=" ")  # Преобразование значения во float перед выводом
+        for i,elem in enumerate(row):
+            if(i== len(row)-1):
+                print("|", end=" ")
+            print(float(elem), end=" ") 
         print()
     print()
 
@@ -63,6 +68,7 @@ def open_file_matrix():
     while True:
         try:
             file_name = input("Введите относительный путь до вашего файла\n")
+            print()
             file_path = os.path.join(current_working_directory, file_name)
             with open(file_path, 'r', encoding="utf-8") as file:
                 for line in file:
@@ -91,3 +97,31 @@ def open_file_matrix():
         print("Матрица в файле не явлеется квадратной")
         exit()
     return matrix
+def print_answers(row):
+    answer = ""
+    for elem in range(len(row)):
+        answer += "x" + str(elem+1) + " = " + str(row[elem])+"  "
+    print(answer)
+
+def random_matrix():
+    while True:
+        try:
+            n = int(input("Введите размерность матрицы, не превышающую 20\n"))
+        except ValueError:
+            print("Введено некорректное значение")
+            continue
+        if (0<=n)and(n<=20):
+            break
+        else:  
+            print("Введено некорректное значение(Матрица должнабыть от 0 до 20)")
+    matrix = []
+    for i in range(n):
+        row =[]
+        for i in range(n+1):
+            if random.random() < 0.5:
+                row.append(random.randint(-10, 100))
+            else:
+                row.append(random.uniform(-10, 100))
+
+        matrix.append(row)
+    return matrix   
