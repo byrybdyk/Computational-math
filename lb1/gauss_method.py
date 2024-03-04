@@ -2,6 +2,7 @@ import os
 from fractions import Fraction
 from matrix_input import *
 
+
 def string_multiplication(matrix, row_index, k, j):
     if row_index < 0 or row_index >= len(matrix):
         raise IndexError("Invalid row index")
@@ -24,10 +25,12 @@ def string_multiplication(matrix, row_index, k, j):
 
     return new_row
 
+
 def swap_rows(matrix, i, j):
     if i < 0 or i >= len(matrix) or j < 0 or j >= len(matrix):
         raise IndexError("Invalid row index")
     matrix[i], matrix[j] = matrix[j], matrix[i]
+
 
 def string_addition(matrix, row_index, adding_row):
     if row_index < 0 or row_index >= len(matrix):
@@ -36,24 +39,32 @@ def string_addition(matrix, row_index, adding_row):
         matrix[row_index][i] += adding_row[i]
     return matrix
 
+
 def method_Gauss(matrix):
+    swap_counts = 0
     for i in range(len(matrix)):
         if matrix[i][i] != 0:
             for j in range(i + 1, len(matrix)):
-                buffer_row = string_multiplication(matrix, i, matrix[j][i], matrix[i][i])
+                buffer_row = string_multiplication(
+                    matrix, i, matrix[j][i], matrix[i][i]
+                )
                 matrix = string_addition(matrix, j, buffer_row)
         else:
             for p in range(i + 1, len(matrix)):
                 if matrix[p][i] != 0:
+                    swap_counts += 1
                     swap_rows(matrix, i, p)
                     break
                 else:
                     raise ValueError("No nonzero diagonal element")
             for j in range(i + 1, len(matrix)):
-                buffer_row = string_multiplication(matrix, i, matrix[j][i], matrix[i][i])
+                buffer_row = string_multiplication(
+                    matrix, i, matrix[j][i], matrix[i][i]
+                )
                 matrix = string_addition(matrix, j, buffer_row)
 
-    return matrix
+    return matrix, swap_counts
+
 
 def is_triangular(matrix):
     n = len(matrix)
@@ -62,6 +73,7 @@ def is_triangular(matrix):
             if matrix[i][j] != 0:
                 return False
     return True
+
 
 def reversal_method(matrix):
     n = len(matrix)
@@ -75,17 +87,19 @@ def reversal_method(matrix):
     x = list(map(float, x))
     return x
 
+
 def triangular_matrix_determinant(matrix):
     det = 1
     for i in range(len(matrix)):
         det *= matrix[i][i]
     return det
 
+
 def calculated_residuals(matrix, answers):
     values = []
     for row in matrix:
         sum = 0
-        for j in range(len(row)-1):
+        for j in range(len(row) - 1):
             sum += row[j] * answers[j]
         values.append(row[-1] - sum)
     return values
