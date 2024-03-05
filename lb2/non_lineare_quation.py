@@ -1,5 +1,5 @@
 from data_imput import *
-from validate_input import quation_solution
+from validate_input import check_convergencecondition, converted_quation, quation_df2_solution, quation_df_solution, quation_solution
 
 def str_quation(quation):
     if quation == 1:
@@ -7,13 +7,25 @@ def str_quation(quation):
     elif quation == 2:
         return "x^3 + 2x^2 - 5"
     elif quation == 3:
-        return "sin(x) - cos(x)"
+        return "cos(x) + x^2"
 
-def half_division_method(quation):
-    a, b, inaccuracy = input_selection(quation)
-    
-    
-    print("a = ", a, "b = ", b, "inaccuracy = ", inaccuracy, "quation = ", quation)
+def validate_initial_approximation(quation,a,b):
+    fa = quation_solution(quation,a)
+    fb =  quation_solution(quation,b)
+    dfa2 =quation_df2_solution(quation,a)
+    dfb2 = quation_df2_solution(quation,b)
+
+    if fa * dfa2 > 0:
+        return a
+    elif fb * dfb2 > 0:
+        return b
+    else:
+        raise ValueError("No suitable initial approximation found on the interval [a, b]")
+
+def half_division_method(quation, method):
+    a, b, inaccuracy = input_selection(quation,method)
+    a1 =a
+    b1 = b
     
     iterations = 0
     max_iter = 1000
@@ -33,17 +45,57 @@ def half_division_method(quation):
     solution = try_to_convert_to_int((a + b) / 2) 
     
     output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    draw_grapth(quation, str_quation(quation), a1, b1)
     
-def Newton_method():
-    print("Newton's method")
+def Newton_method(quation, method):
+    a, b, inaccuracy = input_selection(quation,method)
     
-def Simple_iteration_method():
-    print("Simple iteration method")
+    approximation = validate_initial_approximation(quation, a, b)
     
+    iterations = 0
+    max_iter = 1000
+    x = approximation
+    while abs(quation_solution(quation,x)) > inaccuracy and iterations < max_iter:
+        x = x - quation_solution(quation,x) / quation_df_solution(quation,x)
+        iterations += 1
+        
+    solution = try_to_convert_to_int(x)
+    output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    draw_grapth(quation, str_quation(quation), a, b)
+    
+def Simple_iteration_method(quation, method):
+    a, b, inaccuary = input_selection(quation,method)
+    q = check_convergencecondition(quation, a, b)
+    approximation = validate_initial_approximation(quation, a, b)
+    x = approximation
+    iterations = 0
+    max_iter = 1000
+    if q>1:
+        print("The convergence condition is NOT met")
+        exit()
+    elif( 0< q <= 0.5):
+        while abs(converted_quation(quation,x)-x) > inaccuary and iterations < max_iter:
+            x = converted_quation(quation,x)
+            iterations += 1
+    elif(0.5 <q <1):
+        while abs(converted_quation(quation,x)-x) > ((1-q)/q)*inaccuary and iterations < max_iter:
+            x = converted_quation(quation,x)
+            iterations += 1
+    
+    
+    
+    
+    
+    
+    
+    solution = try_to_convert_to_int(x)
+    output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    draw_grapth(quation, str_quation(quation), a, b)
+
 
 def non_lineare_quation():
     quation = choose_quation()
-    input_variant = choose_method()
+    method = choose_method()
     
 
     switch_command = {
@@ -52,4 +104,4 @@ def non_lineare_quation():
         3: Simple_iteration_method,
         4: exit,
     }
-    switch_command.get(input_variant, exit)(quation)
+    switch_command.get(method, exit)(quation,method)

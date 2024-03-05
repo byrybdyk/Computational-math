@@ -1,5 +1,7 @@
 import os
-from validate_input import count_roots_on_interval, validate_roots
+from validate_input import count_roots_on_interval, quation_solution, validate_roots
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def try_to_convert_to_int(number):
@@ -13,7 +15,7 @@ def try_to_convert_to_int(number):
         return float(number)
         
 
-def hand_input(quation):
+def hand_input(quation, method):
     while True:    
         a = choose_left_interval()
         b = choose_right_interval(a)
@@ -24,7 +26,7 @@ def hand_input(quation):
     inaccuracy = choose_inaccuracy()
     return a, b, inaccuracy
     
-def file_input(quation):
+def file_input(quation, method):
     current_working_directory = os.path.dirname(__file__)
     file_name = input("Enter the relative path to your file\n")
     print()
@@ -33,6 +35,7 @@ def file_input(quation):
     # Читаем строки из файла
         lines = file.readlines()
 
+        
     if len(lines) == 3:
         data =[]
         for line in lines:
@@ -54,6 +57,9 @@ def file_input(quation):
         b = data[1]
         inaccuracy = data[2]
         print("Readed a = ", a, "b = ", b, "inaccuracy = ", inaccuracy)
+        count_roots = count_roots_on_interval(quation, a, b, 0.001) 
+        if not (validate_roots(count_roots)):
+            exit()
     else:
         print("Uncorrect count of lines in the specified file")
         exit()
@@ -77,7 +83,7 @@ def choose_inaccuracy():
             print("Incorrect number entered")
             continue
 
-def input_selection(quation):
+def input_selection(quation,method):
     while True:
         try:
             print("Choose the quation:")
@@ -97,7 +103,7 @@ def input_selection(quation):
         1: hand_input,
         2: file_input,
     }
-    a, b, inaccuracy = switch_command.get(input_selection, exit)(quation)
+    a, b, inaccuracy = switch_command.get(input_selection, exit)(quation, method)
     return a, b, inaccuracy
 
 def choose_quation():
@@ -213,16 +219,15 @@ def output_data(solution, function, iterations, quation):
 
 def output_in_console(solution, function, iterations, quation):
     print("Quation: ", quation, "Solution: ", solution, "f(", solution, ") = ", function, "iterations = ", iterations)
-    exit()
 
 def output_in_file(solution, function, iterations, quation):
     try:
         filename = input("Enter the file name to save the data: ")
 
-        file_path = os.path.join('solutions', filename)
+        file_path = os.path.join('./lb2/solutions', filename)
 
-        if not os.path.exists('solutions'):
-            os.makedirs('solutions')
+        if not os.path.exists('./lb2/solutions'):
+            os.makedirs('./lb2/solutions')
 
         with open(file_path, 'w') as file:
             file.write("Quation: " + str(quation) + '\n')
@@ -236,4 +241,27 @@ def output_in_file(solution, function, iterations, quation):
         print("The specified path does not exist.")
     except PermissionError:
         print("You do not have permission to create a file in this directory.")
-    
+def draw_grapth(quation,function, a, b):
+    x_values = np.linspace(-a-a*0.3, b+b*0.3, 100)
+    y_values = quation_solution(quation, x_values)
+
+    # Построим график функции
+    plt.plot(x_values, y_values, label=function, color='b')
+
+    # Добавим заголовок и метки осей
+    plt.title('График функции ' + function)
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+
+    # Добавим сетку
+    plt.grid(True)
+
+    # Отобразим линии вспомогательных осей
+    plt.axhline(0, color='black', linewidth=0.5)
+    plt.axvline(0, color='black', linewidth=0.5)
+
+    # Добавим легенду
+    plt.legend()
+
+    # Отобразим график
+    plt.show()
