@@ -65,6 +65,8 @@ def Newton_method(quation, method):
     
 def Simple_iteration_method(quation, method):
     a, b, inaccuary = input_selection(quation,method)
+    # lambda_L = -1/(max(abs(quation_df_solution(quation,a)), abs(quation_df_solution(quation,b))))
+    # print("L = ",lambda_L)
     q = check_convergencecondition(quation, a, b)
     approximation = validate_initial_approximation(quation, a, b)
     x = approximation
@@ -76,6 +78,7 @@ def Simple_iteration_method(quation, method):
     elif( 0< q <= 0.5):
         while abs(converted_quation(quation,x)-x) > inaccuary and iterations < max_iter:
             x = converted_quation(quation,x)
+            print(x)
             iterations += 1
     elif(0.5 <q <1):
         while abs(converted_quation(quation,x)-x) > ((1-q)/q)*inaccuary and iterations < max_iter:
