@@ -9,7 +9,7 @@ function TestPage() {
 
     const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:8080/hello');
+            const res = await fetch('http://5.42.73.110/api/hello');
             const data = await res.text();
             setResponse(data);
         } catch (error) {
@@ -19,7 +19,7 @@ function TestPage() {
 
     const handleSubmit = async () => {
         try {
-            const response2 = await fetch(`http://localhost:8080/run-python-script?argument1=${number1}&argument2=${number2}`);
+            const response2 = await fetch(`http://5.42.73.110/api/run-python-script?argument1=${number1}&argument2=${number2}`);
             const data = await response2.text();
             setResponse(data);
         } catch (error) {
