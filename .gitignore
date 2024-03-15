@@ -1,9 +1,9 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+!WebMath/gradle/wrapper/gradle-wrapper.jar
+!WebMath/**/src/main/**/build/
+!WebMath/**/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -18,13 +18,13 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+WebMath/idea
+WebMath/*.iws
+WebMath/*.iml
+WebMath/*.ipr
+WebMath/out/
+!WebMath/**/src/main/**/out/
+!WebMath/**/src/test/**/out/
 
 ### NetBeans ###
 /nbproject/private/
