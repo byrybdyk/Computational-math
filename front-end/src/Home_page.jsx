@@ -5,7 +5,7 @@ function HomePage() {
     return (
         <div>
             <h1>Добро пожаловать на главную страницу!</h1>
-            <Link to="/test_page">Перейти на другую страницу</Link>
+            <Link to="/lb2page">Lab Work 2</Link>
         </div>
     );
 }

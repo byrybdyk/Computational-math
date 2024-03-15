@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-function TestPage() {
+function LB2Page() {
     const url = "dr-chainsaw.ru";
     const [response, setResponse] = useState('');
     const [number1, setNumber1] = useState('');
@@ -58,4 +58,4 @@ function TestPage() {
     );
 }
 
-export default TestPage;
+export default LB2Page;
