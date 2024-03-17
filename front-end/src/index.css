@@ -66,4 +66,112 @@ code {
   font-size: 32px;
   color: #fff;
 }
+.input{
+  display: flex;
+  flex-direction: row;
+  
+}
+.input *{
+  border-radius: 60px;
+}
+.switch{
+  margin-bottom: 15%; 
+  height: 10%;
+  margin-left: 5%;
+  /* flex-direction: column; */
+}
+.left_block{
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  margin-right: 10%;
+  width: 40%;
+  
+}
+.quation-container{
+  display: flex;
+  /* align-items: left; */
+  margin-top: 4%;
+  margin-bottom: 4%;
+  padding-left: 5%;
+  flex-direction: column;
+}
 
+.quation-container button {
+  margin-bottom: 2%;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s linear;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 42px;
+  color: #fff;
+  /* max-width: 100%; */
+  /* max-height: 10%; */
+  /* background-color:red; */
+}
+
+.method-container{
+  display: flex;
+  /* align-items: left; */
+  margin-top: 4%;
+  margin-bottom: 4%;
+  padding-left: 5%;
+  flex-direction: column;
+}
+
+.method-container button {
+  margin-bottom: 2%;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s linear;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 42px;
+  color: #fff;
+  /* max-width: 100%; */
+  /* max-height: 10%; */
+  /* background-color:red; */
+}
+
+.right_block{
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  margin-right: 10%;
+  width: 40%;
+  
+}
+
+.graph{
+  margin-bottom: 20%;
+}
+
+.borders{
+  padding-left: 24%;
+  padding-bottom: 10%;
+}
+
+.borders input {
+  margin-right: 10%;
+  width: 30%;
+  max-width: 30%;
+  background-color: #0071cd;
+  text-align: center;
+  text-decoration-color: #fff;
+  font-size: 42px;
+}
+.answer{
+  display: flex;
+  padding-left: 11%;
+}
+.answer *{
+  margin-right: 10%;
+  width: 80%;
+  max-width: 80%;
+  background-color: #0071cd;
+  text-align: center;
+  text-decoration-color: #fff;
+  font-size: 42px;
+  flex-direction: row;
+}
