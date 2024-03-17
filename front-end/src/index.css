@@ -53,11 +53,11 @@ code {
   transition: color 0.2s linear;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 32px;
+  font-size: 28px;
   color: #fff;
 }
 .main-header-item{
-  margin-right: 38%;
+  margin-right: 28%;
   color: black;
   text-decoration: none;
   transition: color 0.2s linear;
@@ -104,7 +104,7 @@ code {
   transition: color 0.2s linear;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 42px;
+  font-size: 32px;
   color: #fff;
   /* max-width: 100%; */
   /* max-height: 10%; */
@@ -127,7 +127,7 @@ code {
   transition: color 0.2s linear;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 42px;
+  font-size: 32px;
   color: #fff;
   /* max-width: 100%; */
   /* max-height: 10%; */
@@ -159,7 +159,7 @@ code {
   background-color: #0071cd;
   text-align: center;
   text-decoration-color: #fff;
-  font-size: 42px;
+  font-size: 32px;
 }
 .answer{
   display: flex;
@@ -172,6 +172,6 @@ code {
   background-color: #0071cd;
   text-align: center;
   text-decoration-color: #fff;
-  font-size: 42px;
+  font-size: 32px;
   flex-direction: row;
 }

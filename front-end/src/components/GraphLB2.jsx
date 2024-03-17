@@ -38,7 +38,7 @@ function calculateFunction(x) {
             title: "Graph of the function f(x) = x^2 - 3x + 2",
             paper_bgcolor: 'white', // цвет заднего фона
             // plot_bgcolor: 'lightblue', // цвет графика
-            width: 740, // ширина окна графика в пикселях
+            width: 580, // ширина окна графика в пикселях
             height: 384, // высота окна графика в пикселях
             xaxis: {
               title: "x",
