@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import Header from '../components/Header';
 
 function LB2Page() {
     const url = "dr-chainsaw.ru";
@@ -30,7 +31,11 @@ function LB2Page() {
 
     return (
         <div>
-            <h1>Пример REST-запроса на Spring Boot приложение</h1>
+            <Header />
+            <div className= "input">
+
+            </div>
+            {/* <h1>LB2</h1>
             <button onClick={fetchData}>Отправить запрос</button>
             <div>
                 <h2>Ответ:</h2>
@@ -53,7 +58,7 @@ function LB2Page() {
             <div>
                 <h3>Результат:</h3>
                 <p>{response}</p>
-            </div>
+            </div> */}
         </div>
     );
 }
