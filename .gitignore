@@ -27,6 +27,7 @@ WebMath/*.ipr
 WebMath/out/
 !WebMath/**/src/main/**/out/
 !WebMath/**/src/test/**/out/
+.idea/
 
 ### NetBeans ###
 /nbproject/private/

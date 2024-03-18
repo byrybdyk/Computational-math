@@ -24,6 +24,18 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+//task bootRun {
+//    // Параметры запуска приложения Spring Boot
+//    mainClassName = 'com.example.webmath.WebMathApplication' // Замените на полное имя класса вашего приложения
+//    args = ['--spring.profiles.active=dev'] // Аргументы командной строки
+//    systemProperties = System.properties // Передача системных свойств
+//    jvmArgs = ['-Xms512m', '-Xmx1024m'] // JVM аргументы
+//    workingDir = file('path/to/working/directory') // Рабочая директория для запуска
+//    environment = ['SERVER_PORT': '8081'] // Переменные среды
+//    executable = true // Позволяет запускать скрипты на языке Groovy
+//}
+
+
 tasks.named('test') {
     useJUnitPlatform()
 }

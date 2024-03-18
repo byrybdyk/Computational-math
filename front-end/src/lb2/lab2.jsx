@@ -7,7 +7,8 @@ import Typography from '@mui/joy/Typography';
 import GraphLB2 from '../components/GraphLB2';
 
 function LB2Page() {
-    const url = "dr-chainsaw.ru";
+    // const url = "dr-chainsaw.ru";
+    const url = "localhost:8080";
     // const [response, setResponse] = useState('');
     // const [number1, setNumber1] = useState('');
     // const [number2, setNumber2] = useState('');
@@ -83,13 +84,10 @@ const fetchData = async () => {
             setResponse(data);
         }
         else{
-            const response = await fetch(`http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&system=${selectedSystem}&systemMethod=${selectedSystemMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}`);
+            const response = await fetch(`http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedSystem}&method=${selectedSystemMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}`);
             const data = await response.text();
             setResponse(data);
         }
-        const res = await fetch(`http://${url}/api/hello`);
-        const data = await res.text();
-        setResponse(data);
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
     }
