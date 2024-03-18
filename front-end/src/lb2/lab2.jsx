@@ -7,21 +7,13 @@ import Typography from '@mui/joy/Typography';
 import GraphLB2 from '../components/GraphLB2';
 
 function LB2Page() {
-    // const url = "dr-chainsaw.ru";
+    const url = "dr-chainsaw.ru";
     // const [response, setResponse] = useState('');
     // const [number1, setNumber1] = useState('');
     // const [number2, setNumber2] = useState('');
     // const [result, setResult] = useState('');
 
-    // const fetchData = async () => {
-    //     try {
-    //         const res = await fetch(`http://${url}/api/hello`);
-    //         const data = await res.text();
-    //         setResponse(data);
-    //     } catch (error) {
-    //         console.error('Ошибка при получении данных:', error);
-    //     }
-    // };
+    
 
     // const handleSubmit = async () => {
     //     try {
@@ -80,6 +72,27 @@ const handleChangeRightBorder = (event) => {
         value = value.slice(0, 5); // Если длина больше 3 символов, обрезаем до 3 символов
     }
     setRightBorder(value); // Обновляем состояние
+};
+
+const fetchData = async () => {
+    const lbname =2;
+    try {
+        if (checked) {
+            const response = await fetch(`http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedQuation}&method=${selectedMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}`);
+            const data = await response.text();
+            setResponse(data);
+        }
+        else{
+            const response = await fetch(`http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&system=${selectedSystem}&systemMethod=${selectedSystemMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}`);
+            const data = await response.text();
+            setResponse(data);
+        }
+        const res = await fetch(`http://${url}/api/hello`);
+        const data = await res.text();
+        setResponse(data);
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+    }
 };
 const [response, setResponse] = useState('');
     
@@ -273,7 +286,7 @@ const [response, setResponse] = useState('');
                         </label>
                     </div>
                     <div className='answer'>
-                            <button type="submit" сlassName='calculate-button'>Calculate</button>
+                            <button type="submit" сlassName='calculate-button' onClick={fetchData}>Calculate</button>
 
                         <div>
                             <h2>Ответ:</h2>
