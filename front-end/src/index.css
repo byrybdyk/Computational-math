@@ -139,39 +139,64 @@ code {
   flex-direction: column;
   padding-left: 5%;
   margin-right: 10%;
-  width: 40%;
+  width: 50%;
   
 }
 
 .graph{
-  margin-bottom: 20%;
+  margin-bottom: 25%;
 }
 
 .borders{
-  padding-left: 24%;
-  padding-bottom: 10%;
+  padding-left: 0%;
+  padding-bottom: 6%;
+  flex-direction: stroke;
 }
 
 .borders input {
-  margin-right: 10%;
+  margin-right: 6%;
   width: 30%;
   max-width: 30%;
   background-color: #0071cd;
   text-align: center;
   text-decoration-color: #fff;
-  font-size: 32px;
+  font-size: 22px;
+  max-width: 20%;
+}
+
+.borders button {
+  background-color: #0071cd;
+  text-decoration-color: #fff;
+  font-size: 22px;
+  text-align: center;
+
+}
+
+.inaccuary{
+  max-width: 40%;
 }
 .answer{
   display: flex;
   padding-left: 11%;
+  
 }
-.answer *{
-  margin-right: 10%;
-  width: 80%;
-  max-width: 80%;
+.answer {
+  /* margin-right: 10%; */
+  /* width: 80%; */
+  /* max-width: 80%; */
   background-color: #0071cd;
   text-align: center;
   text-decoration-color: #fff;
-  font-size: 32px;
+  font-size: 22px;
   flex-direction: row;
+  border-radius: 0px;
+  max-height: 40%;
+  max-width: 100%;
+  border-radius: 30px;
+}
+.answer-zone{
+  max-width:10% ;
+  width: 10%;
+  border-radius: 10px;
+  color: #fff;
 }

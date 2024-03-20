@@ -43,3 +43,4 @@ front-end/build/
 front-end/node_modules/
 
 WebMath/build/
+WebMath/src/main/resources/scripts/lb2/__pycache__/
