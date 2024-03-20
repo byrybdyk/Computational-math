@@ -1,0 +1,71 @@
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.hidetake.ssh' version '2.11.2'
+}
+
+import org.hidetake.gradle.ssh.*
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//task bootRun {
+//    // Параметры запуска приложения Spring Boot
+//    mainClassName = 'com.example.webmath.WebMathApplication' // Замените на полное имя класса вашего приложения
+//    args = ['--spring.profiles.active=dev'] // Аргументы командной строки
+//    systemProperties = System.properties // Передача системных свойств
+//    jvmArgs = ['-Xms512m', '-Xmx1024m'] // JVM аргументы
+//    workingDir = file('path/to/working/directory') // Рабочая директория для запуска
+//    environment = ['SERVER_PORT': '8081'] // Переменные среды
+//    executable = true // Позволяет запускать скрипты на языке Groovy
+//}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+ssh.settings {
+    identity = new File('C:\\users\\byrybdyk\\.ssh\\id_rsa')
+}
+
+remotes {
+    webServer {
+        host = '5.42.73.110'
+        user = 'byrybdyk'
+    }
+}
+//
+task deployJar {
+    doLast {
+        ssh.run {
+            session(remotes.webServer) {
+                // Execute a command
+//                def result = execute 'sudo service status'
+
+                // Any Gradle methods or properties are available in a session closure
+                copy {
+                    from "D:\\GIT\\Computational-math\\WebMathbuild\\libs\\WebMath-0.0.1-SNAPSHOT.jar"
+                    into "/home/byrybdyk/deploy"
+                }
+
+                put from: 'D:\\GIT\\Computational-math\\WebMath\\build\\libs\\WebMath-0.0.1-SNAPSHOT.jar', into:'/home/byrybdyk/deploy'
+                // Also Groovy methods or properties are available in a session closure
+            }
+        }
+    }
+}

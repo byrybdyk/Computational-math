@@ -1,0 +1,46 @@
+lb1/__pycache__/
+lb2/__pycache__/
+HELP.md
+.gradle
+build/
+!WebMath/gradle/wrapper/gradle-wrapper.jar
+!WebMath/**/src/main/**/build/
+!WebMath/**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+WebMath/idea
+WebMath/*.iws
+WebMath/*.iml
+WebMath/*.ipr
+WebMath/out/
+!WebMath/**/src/main/**/out/
+!WebMath/**/src/test/**/out/
+.idea/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+front-end/build/
+front-end/node_modules/
+
+WebMath/build/
+WebMath/src/main/resources/scripts/lb2/__pycache__/
