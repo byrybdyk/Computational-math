@@ -5,7 +5,7 @@ import LB2Page from './lb2/lab2';
 
 function App() {
   return (
-      <Router>
+      <Router className='background'>
         <div className='background'>
             <div className='main'>
                 <Routes>

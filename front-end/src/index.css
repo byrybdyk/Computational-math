@@ -15,16 +15,18 @@ code {
     monospace;
 }
 
-.background {
-  background: linear-gradient(45deg, #281045 0%, #31194e 100%);
-  background-size: cover;
-  background-repeat: no-repeat;
+body, html {
+  background-color: #31194e;
+  /* background: linear-gradient(45deg, #281045 0%, #31194e 100%); */
+  /* background-size: cover; */
+  /* overflow-y: auto; */
+  /* overflow-x: auto; */
+  /* background-repeat: no-repeat; */
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .main{
   border-radius: 60px;
   width: 168vh;
@@ -75,7 +77,7 @@ code {
   border-radius: 60px;
 }
 .switch{
-  margin-bottom: 15%; 
+  margin-bottom: 4%; 
   height: 10%;
   margin-left: 5%;
   /* flex-direction: column; */
@@ -143,8 +145,14 @@ code {
   
 }
 
+.right_block *{
+  border-radius: 0px;
+}
+
 .graph{
-  margin-bottom: 25%;
+  margin-bottom: 5%;
+  border-radius: 0px;
+  height: 295px;
 }
 
 .borders{

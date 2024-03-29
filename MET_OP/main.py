@@ -29,12 +29,12 @@ def half_division(a, b, epsilon):
         if calculate_question(x1) <= calculate_question(x2):
             b = x2
             print(
-                f"Итерация {i+1}, a = {a}, b = {b}, epsilon_n = {(b-a)/2}, x1 = {round(x1, 5)}, x2 = {round( x2, 5)}, f(x1) = {round(calculate_question(x1),5)}, f(x2) = {round(calculate_question(x2),5)}, f(x1) <= f(x2)"
+                f"Итерация {i+1}, a = {a}, b = {b}"
             )
         else:
             a = x1
             print(
-                f"Итерация {i+1}, a = {a}, b = {b}, epsilon_n = {(b-a)/2}, x1 = {round(x1, 5)}, x2 = {round( x2, 5)}, f(x1) = {round(calculate_question(x1),5)}, f(x2) = {round(calculate_question(x2),5)}, f(x1) > f(x2)"
+                f"Итерация {i+1}, a = {a}, b = {b}"
             )
 
         if (b - a) / 2 > epsilon:
@@ -43,7 +43,7 @@ def half_division(a, b, epsilon):
             break
     x = (a + b) / 2
     print(
-        f"{quation_name} принимает минимум при x = {round(x,5)}, f(x) = {round(calculate_question(x),5)}"
+        f"{quation_name} принимает минимум при x = {x}, f(x) = {calculate_question(x)}"
     )
 
 
@@ -59,21 +59,21 @@ def golden_ratio(a, b, epsilon):
                 x2 = x1
                 x1 = b - t * (b - a)
                 print(
-                    f"Итерация {i+1}, a = {a}, b = {b}, epsilon_n = {epsilon_n}, x1 = {round(x1,5)}, x2 = {round(x2,5)}, f(x1) = {round(calculate_question(x1),5)}, f(x2) = {round(calculate_question(x2),5)}, f(x1) <= f(x2)"
+                    f"Итерация {i+1}, a = {a}, b = {b}"
                 )
             else:
                 a = x1
                 x1 = x2
                 x2 = a + t * (b - a)
                 print(
-                    f"Итерация {i+1}, a = {a}, b = {b}, epsilon_n = {epsilon_n}, x1 = {round(x1,5)}, x2 = {round(x2,5)}, f(x1) = {round(calculate_question(x1),5)}, f(x2) = {round(calculate_question(x2),5)}, f(x1) > f(x2)"
+                    f"Итерация {i+1}, a = {a}, b = {b}"
                 )
             epsilon_n *= t
         else:
             break
     x = (a + b) / 2
     print(
-        f"{quation_name} принимает минимум при x = {round(x,5)}, f(x) = {round(calculate_question(x),5)}"
+        f"{quation_name}  принимает минимум при x = {x}, f(x) = {calculate_question(x)}"
     )
 
 
@@ -83,12 +83,12 @@ def newton_method(a, b, epsilon):
         if abs(df_dx(x)) > epsilon:
             x = x - df_dx(x) / df2_dx2(x)
             print(
-                f"Итерация {i+1}, a = {a}, b = {b}, x = {round(x,5)}, f(x) = {round(calculate_question(x),5)}, f'(x) = {round(df_dx(x),5)}, |{round(df_dx(x),5)}| <= {epsilon}"
+                f"Итерация {i+1}, x{i+1} ={x} f'(x{i+1}) = {str('%.2e' % df_dx(x))}"
             )
         else:
             break
     print(
-        f"{quation_name} принимает минимум при x = {round(x,5)}, f(x) = {round(calculate_question(x),5)}"
+        f"{quation_name}  принимает минимум при x = {x}, f(x) = {str('%.2e' % calculate_question(x))}"
     )
 
 

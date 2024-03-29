@@ -7,24 +7,14 @@ import Typography from "@mui/joy/Typography";
 import GraphLB2 from "../components/GraphLB2";
 import SystemGraphLB2 from "../components/SystemGraphLB2";
 import SaveToFileButton from '../components/SaveToFileButton';
+import Desmos_graph from "../components/Desmos_graph";
+// import Desmos from '../components/Desmos_graph';
 
 function LB2Page() {
   // const url = "dr-chainsaw.ru";
+  
     const url = "localhost:8080";
-  // const [response, setResponse] = useState('');
-  // const [number1, setNumber1] = useState('');
-  // const [number2, setNumber2] = useState('');
-  // const [result, setResult] = useState('');
 
-  // const handleSubmit = async () => {
-  //     try {
-  //         const response2 = await fetch(`http://${url}/api/run-python-script?argument1=${number1}&argument2=${number2}`);
-  //         const data = await response2.text();
-  //         setResponse(data);
-  //     } catch (error) {
-  //         console.error('Ошибка при получении данных:', error);
-  //     }
-  // };
   const [checked, setChecked] = useState(false);
 
   const handleChange = () => {
@@ -321,6 +311,11 @@ function LB2Page() {
                 >
                   Simple iteration method
                 </button>
+                <div>
+                    <input type="file" onChange={handleFileChange} />
+                    <button onClick={handleFileUpload}>Send File</button>
+                    <SaveToFileButton response={response} />
+                </div>
               </div>
             </Typography>
           )}
@@ -329,11 +324,12 @@ function LB2Page() {
           <div className="graph">
           {checked ? (
             <Typography>
-                <GraphLB2
-                    leftBorder={leftBorder}
-                    rightBorder={rightBorder}
-                    quationNumber={selectedQuation}
+              
+                <Desmos_graph 
+                systemNumber={selectedQuation}
                 />
+              
+              
             </Typography>
           ):
           (<Typography>
@@ -380,7 +376,7 @@ function LB2Page() {
             <label>
               <button
                 type="submit"
-                сlassName="calculate-button"
+                className="calculate-button"
                 style={{ color: "white" }}
                 onClick={fetchData}
               >
@@ -423,6 +419,11 @@ function LB2Page() {
                 <h3>Результат:</h3>
                 <p>{response}</p>
             </div> */}
+            
+            {/* <script>
+                var elt = document.getElementById('calculator');
+                var calculator = Desmos.GraphingCalculator(elt);
+              </script> */}
     </div>
   );
 }
