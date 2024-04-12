@@ -8,12 +8,13 @@ import GraphLB2 from "../components/GraphLB2";
 import SystemGraphLB2 from "../components/SystemGraphLB2";
 import SaveToFileButton from '../components/SaveToFileButton';
 import Desmos_graph from "../components/Desmos_graph";
+import Desmos_system_graph from "../components/Desmos_system_graph";
 // import Desmos from '../components/Desmos_graph';
 
 function LB2Page() {
-  // const url = "dr-chainsaw.ru";
+  const url = "dr-chainsaw.ru";
   
-    const url = "localhost:8080";
+    // const url = "localhost:8080";
 
   const [checked, setChecked] = useState(false);
 
@@ -74,12 +75,20 @@ function LB2Page() {
     const lbname = 2;
     try {
       if (checked) {
+        if (!selectedQuation || !selectedMethod || !leftBorder || !rightBorder || !inaccuary) {
+          alert("Not all variables are selected");
+          throw new Error('Not all variables are selected');
+        }
         const response = await fetch(
           `http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedQuation}&method=${selectedMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&inaccuary=${inaccuary}`
         );
         const data = await response.text();
         setResponse(data);
       } else {
+        if (!selectedSystem || !selectedSystemMethod || !leftBorder || !rightBorder || !inaccuary) {
+          alert("Not all variables are selected");
+          throw new Error('Not all variables are selected');
+        }
         const response = await fetch(
           `http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedSystem}&method=${selectedSystemMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&inaccuary=${inaccuary}`
         );
@@ -90,6 +99,7 @@ function LB2Page() {
       console.error("Ошибка при получении данных:", error);
     }
   };
+  
   const [response, setResponse] = useState("");
 
   const [file, setFile] = useState(null);
@@ -293,8 +303,8 @@ function LB2Page() {
                         : "rgb(0, 113, 205)",
                   }}
                 >
-                  x +2y-5<br></br>
-                  y^2 -5x +1
+                  3y^2+0.5x^2-x<br></br>
+                  sin(x)^2-y
                 </button>
               </div>
               <div className="method-container">
@@ -326,18 +336,25 @@ function LB2Page() {
             <Typography>
               
                 <Desmos_graph 
-                systemNumber={selectedQuation}
+                leftBorder={leftBorder}
+                rightBorder={rightBorder}
+                quationNumber={selectedQuation}
                 />
               
               
             </Typography>
           ):
           (<Typography>
-            <SystemGraphLB2
+            <Desmos_system_graph
+            leftBorder={leftBorder}
+            rightBorder={rightBorder}
+            systemNumber={selectedSystem}
+            />
+            {/* <SystemGraphLB2
                     leftBorder={leftBorder}
                     rightBorder={rightBorder}
                     systemNumber={selectedSystem}
-                />
+                /> */}
           </Typography>)
           }
             

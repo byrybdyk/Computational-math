@@ -1,0 +1,276 @@
+\documentclass[14pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{extsizes}
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+\usepackage[unicode, pdftex]{hyperref}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{mdframed}
+
+\geometry{a4paper, top=20mm, bottom=20mm, left=20mm, right=10mm}
+
+\lstdefinestyle{output_style}{
+    basicstyle=\ttfamily
+}
+
+\lstset{style=output_style}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+    Федеральное государственное\\
+    автономное учебное учреждение высшего образования\\
+    <<Национальный исследовательский университет ИТМО>>\\
+\vspace{0.5cm}
+    Мегафакультет компьютеных технологий и управления\\
+    Факультет программной инженерии и компьютерной техники
+\end{center}
+
+\vspace{3cm}
+
+\begin{center}
+\Large
+\textbf{
+    Отчёт\\
+    по лабораторной работе №2\\
+    по дисциплине <<Вычислительная математика>>
+}
+\end{center}
+
+\begin{center}
+\large
+    Вариант 5
+\end{center}
+
+\vspace{5cm}
+
+\begin{flushright}
+    Группа: P3218\\
+    \vspace{0.2cm}
+    Студент: Зарубов Егор Николаевич\\
+    \vspace{0.2cm}
+    Преподаватель: Бострикова Дарья Константиновна
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+    Санкт-Петербург\\
+    2024
+\end{center}
+
+\newpage
+
+\tableofcontents
+
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\newpage
+
+\section{Цель работы}
+
+Целью работы является знакомство с численными методами решения СЛАУ, а также способами и особенностями их реализации на языках программирования.
+
+\section{Задание}
+
+Написать программу для решения СЛАУ с использованием метода Гаусса. Требования к программе:
+\begin{itemize}
+    \item В программе численный метод должен быть реализован в виде отдельной подпрограммы/метода/класса, в который исходные/выходные данные передаются в качестве параметров.
+    \item Размерность матрицы $n\leq20$ (задается из файла или с клавиатуры - по выбору конечного пользователя).
+    \item Должна быть реализована возможность ввода коэффициентов матрицы, как с клавиатуры, так и из файла (по выбору конечного пользователя).
+    \item Должно быть реализовано: вычисление определителя, вывод треугольной матрицы (включая преобразованный столбец В), вывод вектор неизвестных ($x_1$, $x_2$, ..., $x_n$), вывод вектора невязок ($r_1$, $r_2$, ..., $r_n$).
+\end{itemize}
+
+\section{Описание метода выполнения}
+Программа, реализующая метод Гаусса для решения СЛАУ, была написана на языке программирования Python версии 3.11. Были использованы библиотеки \textit{random} (для генерации случайной матрицы), \textit{os} (для проверки файлов),  \textit{fractions} и \textit{decimal} (для проведения точных вычислений).
+
+\newpage
+
+\section{Исходный код программы}
+
+Репозиторий на GitHub: \href{https://github.com/byrybdyk/Computational-math/tree/main/lb1}{\underline{ссылка}}
+
+\begin{mdframed}
+\footnotesize
+\begin{verbatim}
+
+def method_Gauss(matrix):
+    for i in range(len(matrix)):
+        if matrix[i][i] != 0:
+            for j in range(i + 1, len(matrix)):
+                buffer_row = string_multiplication(matrix, i, matrix[j][i], matrix[i][i])
+                matrix = string_addition(matrix, j, buffer_row)
+        else:
+            for p in range(i + 1, len(matrix)):
+                if matrix[p][i] != 0:
+                    swap_rows(matrix, i, p)
+                    break
+                else:
+                    raise ValueError("No nonzero diagonal element")
+            for j in range(i + 1, len(matrix)):
+                buffer_row = string_multiplication(matrix, i, matrix[j][i], matrix[i][i])
+                matrix = string_addition(matrix, j, buffer_row)
+
+    return matrix
+
+\end{verbatim}
+\end{mdframed}
+\begin{center}
+    Листинг 1: Метод получения треугольной матрицы
+\end{center}
+
+\begin{mdframed}
+\small
+\begin{verbatim}
+
+def reversal_method(matrix):
+    n = len(matrix)
+    x = [0] * n  # Create a list to store solutions
+
+    for i in range(n - 1, -1, -1):  # Start from the last equation
+        sum = 0
+        for j in range(i + 1, n):  # Iterate over coefficients above the diagonal
+            sum += matrix[i][j] * x[j]
+        x[i] = (matrix[i][-1] - sum) / matrix[i][i]  # Compute the variable value
+    x = list(map(float, x))
+    return x
+
+\end{verbatim}
+\end{mdframed}
+\begin{center}
+    Листинг 2: Метод получения вектора решений
+\end{center}
+
+\newpage
+
+\section{Рассчётные формулы}
+
+Метод Гаусса состоит из следующих этапов:
+
+\begin{enumerate}[I.]
+    \item Прямой ход -- приведение матрицы к треугольному виду.
+
+    Для каждого $i$-го уравнения (от $1$ до $n-1$) исключаем из каждого последующего за ним $j$-го уравнения $i$-ую компоненту искомого вектора $X$ при помощи метода единственного деления:
+    $$
+    M_j = M_j - \frac{a_{ji}}{a_{ii}} \cdot M_i
+    $$
+    Если оказывается, что в текущем $i$-ом уравнении ведущий коэффициент $a_{ii}$ равен 0, то переставляем текущее уравнение местами с первым уравнением, где этот коэффициент не нулевой. Если такого уравнения нет, то единтсвенное решение найти не удастся.
+
+    \item Вычисление определителя треугольной матрицы.
+    
+    После приведения матрицы к треугольному виду определить вычисляется произведением ведущих элементов. 
+    $$
+    D = (-1)^p \prod \limits_{i = 1}^{n} a_{ii}
+    $$
+    Возможные перстановки $p$ на первом этапе могут повлечь за собой смену знака определителя. 
+
+    Если вычисленный определитель равен 0, то единтсвенное решение найти не удастся.
+    \item Обратный ход -- вычисление компонент искомого вектора $X$.
+    $$
+    x_i = \frac{1}{a_{ii}} (b_i - \sum \limits_{k=i+1}^{n} a_{ik}x_k)
+    $$
+\end{enumerate}
+
+Чтобы оценить правильность полученного решения, его подставляют в систему и сравнивают результат с исходынм вектором свободных членов. Вычисляют вектор невязки $R$:
+$$
+R = AX - B
+$$
+
+\newpage
+
+\section{Пример вывода программы}
+
+\begin{mdframed}
+\small
+\begin{verbatim}
+
+Choose the command:
+1) Manual matrix input     
+2) Input matrix from file  
+3) Generate a random matrix
+4) Exit the program        
+3
+Enter the dimension of the matrix, not exceeding 20
+4
+Matrix read:
+96 88 27 23 | 79
+82 90 87 73 | 48
+77 92 18 59 | 33
+99 25 66 80 | 23
+
+rows swap =  0
+
+Matrix after forward pass:
+96.0 88.0 27.0 23.0 | 79.0
+0.0 14.833333333333334 63.9375 53.354166666666664 |
+-19.479166666666668
+0.0 0.0 -95.97050561797752 -36.48174157303371 | -2.240168539325843
+0.0 0.0 0.0 170.5401501514686 | -152.3178425604777
+
+Determinant of the matrix =  -23306358
+
+x1 = 0.6274798919676768  x2 = 0.3353086312327306  x3 = 0.36285956819164966
+x4 = -0.8931494573283393
+r1 = 0.0  r2 = -3.552713678800501e-15  r3 = -6.661338147750939e-15  r4 = 0.0
+
+\end{verbatim}
+\end{mdframed}
+\begin{center}
+    Листинг 3: Матрица сгенерирована случайно
+\end{center}
+
+\newpage
+
+\begin{mdframed}
+\begin{verbatim}
+Choose the command:
+1) Manual matrix input     
+2) Input matrix from file  
+3) Generate a random matrix
+4) Exit the program        
+2
+Enter the relative path to your file
+1.txt
+
+Matrix read:   
+10 -7 0 | 7    
+-3 2 6 | 4     
+5 -1 5 | 6     
+
+rows swap =  0 
+
+Matrix after forward pass:
+10.0 -7.0 0.0 | 7.0
+0.0 -0.1 6.0 | 6.1
+0.0 0.0 155.0 | 155.0
+
+Determinant of the matrix =  -155
+
+x1 = 0.0  x2 = -1.0  x3 = 1.0
+r1 = 0.0  r2 = 0.0  r3 = 0.0
+
+\end{verbatim}
+\end{mdframed}
+\begin{center}
+    Листинг 4: Матрица считана из файла
+\end{center}
+
+\newpage
+
+\section{Вывод}
+
+В ходе выполнения текущего проекта были изучены численные методы решения систем линейных алгебраических уравнений (СЛАУ), как прямые, так и итерационные. На основе метода Гаусса была разработана программа на языке Python для решения СЛАУ. Были проанализированы условия применимости различных методов, учитывая, например, что метод Гаусса неприменим, если определитель матрицы равен нулю.
+
+Выявлены достоинства и недостатки метода Гаусса по сравнению с итерационными методами: метод Гаусса прост и универсален, обеспечивает точные решения за конечное число операций, но требует больше памяти и накапливает погрешности. Итерационные методы более оптимальны с точки зрения использования памяти и не накапливают погрешности, но их реализация сложнее и они не всегда дают полностью точные ответы.
+
+Была проведена работа по выбору оптимального метода для точных вычислений и визуализации числовых данных. Также значительное внимание уделено проектированию и разработке удобного консольного интерфейса программы, обеспечивающего удобство в использовании и обработку различных ситуаций, включая критические.
+
+\end{document}

@@ -26,7 +26,7 @@ public class PythonController {
                 scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb2\\main.py";
                 launchCommand = "python";
             } else {
-                scriptPath = currentDir + "/back/test.py";
+                scriptPath = "/home/byrybdyk/back/lb2/main.py";
                 launchCommand = "python3";
             }
             ///root/back/test.py

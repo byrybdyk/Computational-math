@@ -2,7 +2,6 @@ import React from 'react';
 import Plot from "react-plotly.js";
 
 export default function SystemGraphLB2({ leftBorder, rightBorder, systemNumber })  {
-    // Массив значений x
     leftBorder -= 1;
     rightBorder += 1;
     const xValues = [];
@@ -12,10 +11,8 @@ export default function SystemGraphLB2({ leftBorder, rightBorder, systemNumber }
 
     let titleQuation = "";
 
-    // Массив значений y, вычисленных по функции для каждого значения x
     const yValues1 = xValues.map(x => calculateFunction(x, systemNumber, 1));
     const yValues2 = xValues.map(x => calculateFunction(x, systemNumber, 2));
-    // alert(xValues+" = "+ yValues1);
 
     function calculateFunction(x, systemNumber, functionNumber) {
         let result = 0;

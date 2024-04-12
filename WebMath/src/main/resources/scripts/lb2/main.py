@@ -15,7 +15,6 @@ def main():
 
     switch_command = {
         1: non_lineare_quation,
-        # 2: system_of_non_linear_equations,
         2: non_lineare_system,
         3: exit,
     }

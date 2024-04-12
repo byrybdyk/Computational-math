@@ -32,7 +32,6 @@ def file_input(quation, method):
     print()
     file_path = os.path.join(current_working_directory, file_name)
     with open(file_path, "r", encoding="utf-8") as file:
-    # Читаем строки из файла
         lines = file.readlines()
 
         
@@ -244,24 +243,16 @@ def output_in_file(solution, function, iterations, quation):
 def draw_grapth(quation,function, a, b):
     x_values = np.linspace(-a-a*0.3, b+b*0.3, 100)
     y_values = quation_solution(quation, x_values)
-
-    # Построим график функции
     plt.plot(x_values, y_values, label=function, color='b')
 
-    # Добавим заголовок и метки осей
     plt.title('График функции ' + function)
     plt.xlabel('x')
     plt.ylabel('f(x)')
 
-    # Добавим сетку
     plt.grid(True)
 
-    # Отобразим линии вспомогательных осей
     plt.axhline(0, color='black', linewidth=0.5)
     plt.axvline(0, color='black', linewidth=0.5)
 
-    # Добавим легенду
     plt.legend()
-
-    # Отобразим график
     plt.show()

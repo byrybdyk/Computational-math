@@ -18,7 +18,6 @@ def simple_iteration_method(system,method) :
     inaccuracy = try_to_convert_to_int(sys.argv[6])
     max_iter = 1000
     iteration =0
-    
     if not check_convergence(system, method, x0, y0):
         print("The iteration matrix does not\nsatisfy the convergence condition.")
         exit()
@@ -30,15 +29,16 @@ def simple_iteration_method(system,method) :
             print(f"x = {x}\ny = {y}")
             # print(f"")
             print(f"Iterations = {iteration}")
+            print(f"inncuary x= {x-f1(x,y,system)}\ninnacuary y= {y-f2(x,y,system)}")
             return x, y
         x0, y0 = x, y
         iteration += 1
-    
+    print("НЕ сходится")
 def f1(x,y,system):
     if(system == 1):
         return 0.3 - 0.1*x*x- 0.2*y*y
     elif(system == 2):
-        return x +2*y-5
+        return 3*y*y+0.5*x*x
     else: 
         print("System out of choice")
         exit()
@@ -46,7 +46,7 @@ def f2(x,y,system):
     if(system == 1):
         return 0.7 -0.2*x*x - 0.1*x*y
     elif(system == 2):
-        return y*y -5*x +1
+        return np.sin(x)**2
     else:
         print("System out of choice")
         exit()
@@ -63,7 +63,7 @@ def f1_dx(system, x, y):
     if system == 1:
         return -0.2 * x
     elif system == 2:
-        return 1
+        return x
     else:
         print("System out of choice")
         exit()
@@ -72,7 +72,7 @@ def f1_dy(system, x, y):
     if system == 1:
         return -0.4 * y
     elif system == 2:
-        return 2
+        return 6*y
     else:
         print("System out of choice")
         exit()
@@ -81,7 +81,7 @@ def f2_dx(system, x, y):
     if system == 1:
         return -0.4 * x - 0.1 * y
     elif system == 2:
-        return -5
+        return np.sin(2*x)
     else:
         print("System out of choice")
         exit()
@@ -90,7 +90,7 @@ def f2_dy(system, x, y):
     if system == 1:
         return 0
     elif system == 2:
-        return 2 * y
+        return 0
     else:
         print("System out of choice")
         exit()

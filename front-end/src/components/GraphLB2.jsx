@@ -7,15 +7,13 @@ export default function GraphLB2({ leftBorder, rightBorder,quationNumber })  {
   rightBorder *= 1.3;
 const xValues = [];
 for (let i = leftBorder; i <= rightBorder; i += 0.1) {
-    xValues.push(parseFloat(i.toFixed(1))); // Округляем до одного знака после запятой
+    xValues.push(parseFloat(i.toFixed(1))); 
 }
 let titleQuation = "a";
-// Массив значений y, вычисленных по функции для каждого значения x
 const yValues = xValues.map(x => calculateFunction(x,quationNumber));
 const strings = Array.from({ length: 10 }, (_, index) => (index + 1).toString());
 const yNumbers = Array.from({ length: 10 }, (_, index) => index + 1);
 function calculateFunction(x, quationNumber) {
-  // const titleQuation= "";
     if(quationNumber =='1'){
       titleQuation ="Graph of the function f(x) = x^2 - 3x + 2";
       return x * x - 3 * x + 2;
@@ -44,22 +42,22 @@ function calculateFunction(x, quationNumber) {
             {
               x: xValues,
               y: yValues,
-              mode: "lines+markers", // Линии и точки на графике
+              mode: "lines+markers",
               type: "scatter",
             },
           ]}
           layout={{
             title: titleQuation,
-            paper_bgcolor: 'white', // цвет заднего фона
-            // plot_bgcolor: 'lightblue', // цвет графика
-            width: 540, // ширина окна графика в пикселях
-            height: 295, // высота окна графика в пикселях
+            paper_bgcolor: 'white', 
+
+            width: 540,
+            height: 295, 
             xaxis: {
               title: "x",
             },
             yaxis: {
               title: "f(x)",
-                scaleanchor: "f(x)", // Относительно оси X
+                scaleanchor: "f(x)", 
             },
             aspectratio: { x: 1, y: 1 },
           }}
