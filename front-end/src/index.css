@@ -180,6 +180,32 @@ body, html {
 
 }
 
+.borders_lb3{
+  padding-left: 5%;
+  padding-bottom: 6%;
+  flex-direction: stroke;
+}
+
+.borders_lb3 input {
+  margin-right: 6%;
+  width: 19%;
+  max-width: 25%;
+  background-color: #0071cd;
+  text-align: center;
+  text-decoration-color: #fff;
+  font-size: 22px;
+}
+
+.borders_lb3 button {
+  margin-top: 5%;
+  margin-left: 22%;
+  background-color: #0071cd;
+  text-decoration-color: #fff;
+  font-size: 30px;
+  text-align: center;
+  width: 50%;
+}
+
 .inaccuary{
   max-width: 40%;
 }
@@ -201,10 +227,14 @@ body, html {
   max-height: 40%;
   max-width: 100%;
   border-radius: 30px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .answer-zone{
   max-width:10% ;
   width: 10%;
   border-radius: 10px;
   color: #fff;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
