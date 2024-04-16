@@ -56,6 +56,51 @@ public class PythonController {
             return "Error executing Python script".toString();
         }
     }
+
+    @GetMapping("api/run-python-script_lb3")
+    public String runPythonScript(@RequestParam("quation") String quation, @RequestParam("method") String method,
+                                @RequestParam("leftBorder") String leftBorder, @RequestParam("rightBorder") String rightBorder,
+                                @RequestParam("inaccuary") String inaccuary,@RequestParam("parts") String parts) {
+        try {
+            System.out.println("Get request LB_3 "+quation+" "+ method+" "+leftBorder+" "+rightBorder+ " "+ inaccuary+" "+ parts);
+            String currentDir = System.getProperty("user.dir");
+            String scriptPath;
+            String launchCommand;
+            String osName = System.getProperty("os.name").toLowerCase();
+            if (osName.contains("windows")) {
+                scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb3\\main.py";
+                launchCommand = "python";
+            } else {
+                scriptPath = "/home/byrybdyk/back/lb2/main.py";
+                launchCommand = "python3";
+            }
+            ///root/back/test.py
+            // Создаем объект ProcessBuilder для запуска Python скрипта
+            ProcessBuilder processBuilder = new ProcessBuilder(launchCommand, scriptPath, quation, method, leftBorder, rightBorder,inaccuary, parts);
+            // Запускаем процесс
+            Process process = processBuilder.start();
+
+            // Читаем вывод скрипта
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            // Ждем завершения процесса и получаем его код возврата
+            int exitCode = process.waitFor();
+            System.out.println(output.toString());
+            System.out.println(scriptPath);
+            // Возвращаем результат выполнения скрипта и его код возврата
+            return output.toString();
+
+        } catch (IOException | InterruptedException e) {
+//            e.printStackTrace();
+            System.out.println(System.getProperty("user.dir"));
+            return "Error executing Python script".toString();
+        }
+    }
     @PostMapping("/api/send-file")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
