@@ -6,15 +6,15 @@ import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import GraphLB2 from "../components/GraphLB2";
 import SystemGraphLB2 from "../components/SystemGraphLB2";
-import SaveToFileButton from '../components/SaveToFileButton';
+import SaveToFileButton from "../components/SaveToFileButton";
 import Desmos_graph from "../components/Desmos_graph";
 import Desmos_system_graph from "../components/Desmos_system_graph";
 // import Desmos from '../components/Desmos_graph';
 
 function LB2Page() {
   const url = "dr-chainsaw.ru";
-  
-    // const url = "localhost:8080";
+
+  // const url = "localhost:8080";
 
   const [checked, setChecked] = useState(false);
 
@@ -75,9 +75,15 @@ function LB2Page() {
     const lbname = 2;
     try {
       if (checked) {
-        if (!selectedQuation || !selectedMethod || !leftBorder || !rightBorder || !inaccuary) {
+        if (
+          !selectedQuation ||
+          !selectedMethod ||
+          !leftBorder ||
+          !rightBorder ||
+          !inaccuary
+        ) {
           alert("Not all variables are selected");
-          throw new Error('Not all variables are selected');
+          throw new Error("Not all variables are selected");
         }
         const response = await fetch(
           `http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedQuation}&method=${selectedMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&inaccuary=${inaccuary}`
@@ -85,9 +91,15 @@ function LB2Page() {
         const data = await response.text();
         setResponse(data);
       } else {
-        if (!selectedSystem || !selectedSystemMethod || !leftBorder || !rightBorder || !inaccuary) {
+        if (
+          !selectedSystem ||
+          !selectedSystemMethod ||
+          !leftBorder ||
+          !rightBorder ||
+          !inaccuary
+        ) {
           alert("Not all variables are selected");
-          throw new Error('Not all variables are selected');
+          throw new Error("Not all variables are selected");
         }
         const response = await fetch(
           `http://${url}/api/run-python-script?lbname=${lbname}&type=${checked}&quation=${selectedSystem}&method=${selectedSystemMethod}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&inaccuary=${inaccuary}`
@@ -99,7 +111,7 @@ function LB2Page() {
       console.error("Ошибка при получении данных:", error);
     }
   };
-  
+
   const [response, setResponse] = useState("");
 
   const [file, setFile] = useState(null);
@@ -111,30 +123,32 @@ function LB2Page() {
 
   const handleFileUpload = async () => {
     if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
+      const formData = new FormData();
+      formData.append("file", file);
 
-        try {
-            const response = await fetch(`http://${url}/api/send-file`, {
-                method: 'POST',
-                body: formData
-            });
+      try {
+        const response = await fetch(`http://${url}/api/send-file`, {
+          method: "POST",
+          body: formData,
+        });
 
-            if (response.ok) {
-                const data = await response.text();
-                setResponse(data);
-                console.log('Файл успешно загружен!');
-            } else {
-                console.error('Произошла ошибка при загрузке файла:', response.status);
-            }
-        } catch (error) {
-            console.error('Ошибка при отправке запроса:', error);
+        if (response.ok) {
+          const data = await response.text();
+          setResponse(data);
+          console.log("Файл успешно загружен!");
+        } else {
+          console.error(
+            "Произошла ошибка при загрузке файла:",
+            response.status
+          );
         }
+      } catch (error) {
+        console.error("Ошибка при отправке запроса:", error);
+      }
     } else {
-        alert('Пожалуйста, выберите файл перед отправкой.');
+      alert("Пожалуйста, выберите файл перед отправкой.");
     }
-};
-
+  };
 
   return (
     <div>
@@ -165,7 +179,6 @@ function LB2Page() {
                   "--Switch-trackWidth": "400px",
                   "--Switch-trackHeight": "61px",
                   "--Switch-thumbRadius": "50px",
-                  "--Switch-thumbSize": "50px",
                 }}
                 sx={(theme) => ({
                   "--Switch-thumbShadow": "0 3px 7px 0 rgba(0 0 0 / 0.12)",
@@ -272,9 +285,9 @@ function LB2Page() {
                   Simple iteration method
                 </button>
                 <div>
-                    <input type="file" onChange={handleFileChange} />
-                    <button onClick={handleFileUpload}>Send File</button>
-                    <SaveToFileButton response={response} />
+                  <input type="file" onChange={handleFileChange} />
+                  <button onClick={handleFileUpload}>Send File</button>
+                  <SaveToFileButton response={response} />
                 </div>
               </div>
             </Typography>
@@ -290,7 +303,7 @@ function LB2Page() {
                         : "rgb(0, 113, 205)",
                   }}
                 >
-                  0.1x^2 +x + 0.2y^2 - 0.3  <br></br>
+                  0.1x^2 +x + 0.2y^2 - 0.3 <br></br>
                   0.2x^2 + y + 0.1xy -0.7
                 </button>
 
@@ -308,8 +321,6 @@ function LB2Page() {
                 </button>
               </div>
               <div className="method-container">
-                
-
                 <button
                   onClick={() => handleSystemMethodChange("1")}
                   style={{
@@ -322,9 +333,9 @@ function LB2Page() {
                   Simple iteration method
                 </button>
                 <div>
-                    <input type="file" onChange={handleFileChange} />
-                    <button onClick={handleFileUpload}>Send File</button>
-                    <SaveToFileButton response={response} />
+                  <input type="file" onChange={handleFileChange} />
+                  <button onClick={handleFileUpload}>Send File</button>
+                  <SaveToFileButton response={response} />
                 </div>
               </div>
             </Typography>
@@ -332,35 +343,30 @@ function LB2Page() {
         </div>
         <div className="right_block">
           <div className="graph">
-          {checked ? (
-            <Typography>
-              
-                <Desmos_graph 
-                leftBorder={leftBorder}
-                rightBorder={rightBorder}
-                quationNumber={selectedQuation}
+            {checked ? (
+              <Typography>
+                <Desmos_graph
+                  leftBorder={leftBorder}
+                  rightBorder={rightBorder}
+                  quationNumber={selectedQuation}
                 />
-              
-              
-            </Typography>
-          ):
-          (<Typography>
-            <Desmos_system_graph
-            leftBorder={leftBorder}
-            rightBorder={rightBorder}
-            systemNumber={selectedSystem}
-            />
-            {/* <SystemGraphLB2
+              </Typography>
+            ) : (
+              <Typography>
+                <Desmos_system_graph
+                  leftBorder={leftBorder}
+                  rightBorder={rightBorder}
+                  systemNumber={selectedSystem}
+                />
+                {/* <SystemGraphLB2
                     leftBorder={leftBorder}
                     rightBorder={rightBorder}
                     systemNumber={selectedSystem}
                 /> */}
-          </Typography>)
-          }
-            
+              </Typography>
+            )}
           </div>
           <div className="borders">
-            
             <label>
               <input
                 type="number"
@@ -436,8 +442,8 @@ function LB2Page() {
                 <h3>Результат:</h3>
                 <p>{response}</p>
             </div> */}
-            
-            {/* <script>
+
+      {/* <script>
                 var elt = document.getElementById('calculator');
                 var calculator = Desmos.GraphingCalculator(elt);
               </script> */}
