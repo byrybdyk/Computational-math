@@ -40,7 +40,7 @@ def Rectangle_method_left(quation, left_border, right_border, inaccuracy, parts)
         for i in range(parts):
             integral += integrand(quation, left_border + (i - 1) * h)
         integral *= h
-        I = (integral_2 - integral) / (2**2 - 1)
+        I = abs((integral_2 - integral) / (2**2 - 1))
         parts *= 2
     if integral < float("inf"):
         print(f"S = {integral}\nParts = {parts//2}\nInnacuary = {I}")
@@ -65,7 +65,7 @@ def Rectangle_method_centre(quation, left_border, right_border, inaccuracy, part
         for i in range(parts):
             integral += integrand(quation, left_border + (i - 1 + h / 2) * h)
         integral *= h
-        I = (integral_2 - integral) / (2**2 - 1)
+        I = abs((integral_2 - integral) / (2**2 - 1))
         parts *= 2
     if integral < float("inf"):
         print(f"S = {integral}\nParts = {parts//2}\nInnacuary = {I}")
@@ -90,7 +90,7 @@ def Rectangle_method_right(quation, left_border, right_border, inaccuracy, parts
         for i in range(parts):
             integral += integrand(quation, left_border + (i) * h)
         integral *= h
-        I = (integral_2 - integral) / (2**2 - 1)
+        I = abs((integral_2 - integral) / (2**2 - 1))
         parts *= 2
     if integral < float("inf"):
         print(f"S = {integral}\nParts = {parts//2}\nInnacuary = {I}")
@@ -119,7 +119,7 @@ def trapezoidal_method(quation, left_border, right_border, inaccuracy, parts):
         for i in range(parts):
             integral += integrand(quation, left_border + i * h)
         integral *= h
-        I = (integral_2 - integral) / (2**2 - 1)
+        I = abs((integral_2 - integral) / (2**2 - 1))
         parts *= 2
     if integral < float("inf"):
         print(f"S = {integral}\nParts = {parts//2}\nInnacuary = {I}")
@@ -152,7 +152,7 @@ def simpson_method(quation, left_border, right_border, inaccuracy, parts):
         for i in range(2, parts - 1, 2):
             integral += 2 * integrand(quation, x_values[i])
         integral *= h / 3
-        I = (integral_2 - integral) / (2**4 - 1)
+        I = abs((integral_2 - integral) / (2**2 - 1))
         parts *= 2
 
 
