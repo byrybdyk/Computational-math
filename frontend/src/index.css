@@ -88,6 +88,13 @@ html {
   margin-right: 10%;
   width: 40%;
 }
+.left_blockLB4 {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  /* margin-right: 10%; */
+  width: 20%;
+}
 .quation-container {
   display: flex;
   /* align-items: left; */
@@ -145,7 +152,14 @@ html {
 .right_block * {
   border-radius: 0px;
 }
-
+.right_blockLB4 {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  margin-right: 2%;
+  width: 80%;
+  /* align-items: center; */
+}
 .graph {
   margin-bottom: 5%;
   border-radius: 0px;
@@ -216,7 +230,7 @@ html {
   background-color: #0071cd;
   text-align: center;
   text-decoration-color: #fff;
-  font-size: 22px;
+  font-size: 24px;
   flex-direction: row;
   border-radius: 0px;
   max-height: 40%;
@@ -224,6 +238,42 @@ html {
   border-radius: 30px;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  width: 100%;
+}
+.answerLb4 {
+  display: flex;
+  padding-left: 2%;
+  text-align: left;
+}
+.answerLb4 {
+  /* margin-right: 10%; */
+  /* width: 80%; */
+  /* max-width: 80%; */
+  background-color: #0071cd;
+  text-align: center;
+  text-decoration-color: #fff;
+  font-size: 24px;
+  flex-direction: row;
+  border-radius: 0px;
+  max-height: 40%;
+  max-width: 100%;
+  border-radius: 30px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  width: 100%;
+  /* width: 100%; */
+}
+
+.answer-zoneLB4 {
+  /* max-width: 10%;
+  width: 10%; */
+  border-radius: 10px;
+  color: #fff;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow-y: scroll;
+  max-height: 200px;
+  max-width: ;
 }
 .answer-zone {
   max-width: 10%;
@@ -234,12 +284,35 @@ html {
   word-wrap: break-word;
 }
 
-.input_coordinates input {
+.input_coordinates {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_coordinates button {
   margin-top: 5%;
+  text-decoration: none;
+  transition: color 0.2s linear;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 22px;
+  color: #fff;
+  background-color: #0071cd;
+  width: 50%;
+  /* max-width: 100%; */
+  /* max-height: 10%; */
+  /* background-color:red; */
+}
+
+.input_coordinates input {
+  margin-top: 3%;
   margin-left: 0%;
   background-color: #0071cd;
   text-decoration-color: #fff;
   font-size: 20px;
   text-align: center;
   width: 50%;
+}
+.centered {
+  margin: 0 auto; /* Центрирование по горизонтали */
 }
