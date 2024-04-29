@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -15,7 +15,8 @@ code {
     monospace;
 }
 
-body, html {
+body,
+html {
   background-color: #31194e;
   /* background: linear-gradient(45deg, #281045 0%, #31194e 100%); */
   /* background-size: cover; */
@@ -27,13 +28,13 @@ body, html {
   justify-content: center;
   align-items: center;
 }
-.main{
+.main {
   border-radius: 60px;
   width: 168vh;
   height: 50vw;
   background: linear-gradient(226deg, #461d9f 0%, #140a2a 100%);
 }
-.header{
+.header {
   padding-left: 5%;
   width: 100%;
   height: 2%;
@@ -41,14 +42,13 @@ body, html {
   align-items: center;
 }
 
-.header-container{
+.header-container {
   display: flex;
   align-items: center;
   margin-bottom: 4%;
-
 }
 
-.header-item{
+.header-item {
   margin-right: 6.85%;
   color: black;
   text-decoration: none;
@@ -58,7 +58,7 @@ body, html {
   font-size: 28px;
   color: #fff;
 }
-.main-header-item{
+.main-header-item {
   margin-right: 28%;
   color: black;
   text-decoration: none;
@@ -68,29 +68,27 @@ body, html {
   font-size: 32px;
   color: #fff;
 }
-.input{
+.input {
   display: flex;
   flex-direction: row;
-  
 }
-.input *{
+.input * {
   border-radius: 60px;
 }
-.switch{
-  margin-bottom: 4%; 
+.switch {
+  margin-bottom: 4%;
   height: 10%;
   margin-left: 5%;
   /* flex-direction: column; */
 }
-.left_block{
+.left_block {
   display: flex;
   flex-direction: column;
   padding-left: 5%;
   margin-right: 10%;
   width: 40%;
-  
 }
-.quation-container{
+.quation-container {
   display: flex;
   /* align-items: left; */
   margin-top: 4%;
@@ -113,7 +111,7 @@ body, html {
   /* background-color:red; */
 }
 
-.method-container{
+.method-container {
   display: flex;
   /* align-items: left; */
   margin-top: 4%;
@@ -136,26 +134,25 @@ body, html {
   /* background-color:red; */
 }
 
-.right_block{
+.right_block {
   display: flex;
   flex-direction: column;
   padding-left: 5%;
   margin-right: 10%;
   width: 50%;
-  
 }
 
-.right_block *{
+.right_block * {
   border-radius: 0px;
 }
 
-.graph{
+.graph {
   margin-bottom: 5%;
   border-radius: 0px;
   height: 295px;
 }
 
-.borders{
+.borders {
   padding-left: 0%;
   padding-bottom: 6%;
   flex-direction: stroke;
@@ -177,10 +174,9 @@ body, html {
   text-decoration-color: #fff;
   font-size: 22px;
   text-align: center;
-
 }
 
-.borders_lb3{
+.borders_lb3 {
   padding-left: 5%;
   padding-bottom: 6%;
   flex-direction: stroke;
@@ -206,13 +202,12 @@ body, html {
   width: 50%;
 }
 
-.inaccuary{
+.inaccuary {
   max-width: 40%;
 }
-.answer{
+.answer {
   display: flex;
   padding-left: 11%;
-  
 }
 .answer {
   /* margin-right: 10%; */
@@ -230,11 +225,21 @@ body, html {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
-.answer-zone{
-  max-width:10% ;
+.answer-zone {
+  max-width: 10%;
   width: 10%;
   border-radius: 10px;
   color: #fff;
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+.input_coordinates input {
+  margin-top: 5%;
+  margin-left: 0%;
+  background-color: #0071cd;
+  text-decoration-color: #fff;
+  font-size: 20px;
+  text-align: center;
+  width: 50%;
 }
