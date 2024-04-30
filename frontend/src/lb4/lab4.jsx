@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import DesmosGraph from "./Desmos_graph";
+import SaveToFileButton from "./SaveToFileButton";
 function LB4Page() {
   const [pairs, setPairs] = useState({
     pair1: "",
@@ -23,6 +24,42 @@ function LB4Page() {
     }
     return str;
   }
+  const [file, setFile] = useState(null);
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleFileUpload = async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch(`http://${url}/api/send-file-lb4`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.text();
+          let [firstPart, rest] = splitFirstLine(data);
+          setFirstLine(firstPart);
+          setResponse(rest);
+          console.log("Файл успешно загружен!");
+        } else {
+          console.error(
+            "Произошла ошибка при загрузке файла:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Ошибка при отправке запроса:", error);
+      }
+    } else {
+      alert("Пожалуйста, выберите файл перед отправкой.");
+    }
+  };
 
   const handleChangePair1 = (event) => handleChangePairs(event, "pair1");
   const handleChangePair2 = (event) => handleChangePairs(event, "pair2");
@@ -206,6 +243,11 @@ function LB4Page() {
                 Calculate
               </button>
             </label>
+          </div>
+          <div>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleFileUpload}>Send File</button>
+            <SaveToFileButton response={response} />
           </div>
         </div>
         <div className="right_blockLB4">

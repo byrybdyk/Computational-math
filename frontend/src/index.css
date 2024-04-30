@@ -92,6 +92,7 @@ html {
   display: flex;
   flex-direction: column;
   padding-left: 5%;
+  color: #fff;
   /* margin-right: 10%; */
   width: 20%;
 }

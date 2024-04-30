@@ -172,7 +172,7 @@ public class PythonController {
                     scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb2\\main.py";
                     launchCommand = "python";
                 } else {
-                    scriptPath = currentDir + "/back/test.py";
+                    scriptPath = "/home/byrybdyk/back/lb2/main.py";
                     launchCommand = "python3";
                 }
                 ///root/back/test.py
@@ -204,8 +204,69 @@ public class PythonController {
             return "Choose the file";
         }
     }
+    @PostMapping("/api/send-file-lb4")
+    public String handleFileUploadLb4(@RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                // Читаем содержимое файла в строку
+                String fileContent = new String(file.getBytes());
+                String[] lines = fileContent.split("\\n");
+                // Выводим содержимое файла на сервере
+                System.out.println("File context");
+                for (String line : lines) {
+                    System.out.println(line);
+                }
+                // ValidateFile validator = new ValidateFile();
+                // boolean isValid = validator.validateFile(lines);
 
+                // if(!isValid) {
+                //     return "Uncorrected file.";
+                // }
+
+                String currentDir = System.getProperty("user.dir");
+                String scriptPath;
+                String launchCommand;
+                String osName = System.getProperty("os.name").toLowerCase();
+                if (osName.contains("windows")) {
+                    scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb4\\main.py";
+                    launchCommand = "python";
+                } else {
+                    scriptPath = "/home/byrybdyk/back/lb4/main.py";
+                    launchCommand = "python3";
+                }
+                ///root/back/test.py
+                // Создаем объект ProcessBuilder для запуска Python скрипта
+                ProcessBuilder processBuilder = new ProcessBuilder(launchCommand, scriptPath, lines[0], lines[1], lines[2], lines[3], lines[4],lines[5], lines[6], lines[7],lines[8],lines[9],lines[10],lines[11]);
+                // Запускаем процесс
+                Process process = processBuilder.start();
+
+                // Читаем вывод скрипта
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                StringBuilder output = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+
+                // Ждем завершения процесса и получаем его код возврата
+                int exitCode = process.waitFor();
+                System.out.println(output.toString());
+                System.out.println(scriptPath);
+                // Возвращаем результат выполнения скрипта и его код возврата
+                return output.toString();
+            } catch (IOException e) {
+                return "Ошибка при чтении файла: " + e.getMessage();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return "Choose the file";
+        }
+    }
 }
+
+
+
 //while
 //    pyOut
 //    if pyout != exit
