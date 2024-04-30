@@ -272,8 +272,7 @@ html {
   overflow-wrap: break-word;
   word-wrap: break-word;
   overflow-y: scroll;
-  max-height: 200px;
-  max-width: ;
+  max-height: 700px;
 }
 .answer-zone {
   max-width: 10%;

@@ -47,8 +47,9 @@ function LB4Page() {
   };
   const [firstLine, setFirstLine] = useState("");
   function splitFirstLine(str) {
-    const [firstLine2, rest] = str.split("\n", 2);
-    return firstLine2;
+    const [firstPart, rest] = str.split("space", 2);
+
+    return [firstPart, rest];
   }
 
   function validatePairs() {
@@ -73,8 +74,9 @@ function LB4Page() {
           `http://${url}/api/run-python-script_lb${lbname}?pair1=${pairs.pair1}&pair2=${pairs.pair2}&pair3=${pairs.pair3}&pair4=${pairs.pair4}&pair5=${pairs.pair5}&pair6=${pairs.pair6}&pair7=${pairs.pair7}&pair8=${pairs.pair8}&pair9=${pairs.pair9}&pair10=${pairs.pair10}&pair11=${pairs.pair11}&pair12=${pairs.pair12}`
         );
         const data = await response.text();
-        setFirstLine(splitFirstLine(data));
-        setResponse(data);
+        let [firstPart, rest] = splitFirstLine(data);
+        setFirstLine(firstPart);
+        setResponse(rest);
       } catch (error) {
         console.error("Ошибка при получении данных:", error);
       }
