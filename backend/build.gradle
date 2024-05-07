@@ -4,6 +4,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.hidetake.ssh' version '2.11.2'
+    
 }
 
 import org.hidetake.gradle.ssh.*
@@ -22,23 +23,78 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('junit:junit:4.13.1')
+    implementation 'org.apache.xmlbeans:xmlbeans:5.1.0'
 }
 
-//task bootRun {
-//    // Параметры запуска приложения Spring Boot
-//    mainClassName = 'com.example.webmath.WebMathApplication' // Замените на полное имя класса вашего приложения
-//    args = ['--spring.profiles.active=dev'] // Аргументы командной строки
-//    systemProperties = System.properties // Передача системных свойств
-//    jvmArgs = ['-Xms512m', '-Xmx1024m'] // JVM аргументы
-//    workingDir = file('path/to/working/directory') // Рабочая директория для запуска
-//    environment = ['SERVER_PORT': '8081'] // Переменные среды
-//    executable = true // Позволяет запускать скрипты на языке Groovy
-//}
 
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+task playMusic {
+    doLast {
+        String audioFilePath = 'C:\\sound.mp3'
+
+        exec {
+            commandLine 'cmd', '/c', audioFilePath
+        }
+    }
+}
+
+build.finalizedBy(playMusic)
+
+task validateXmlFiles {
+    doLast {
+        FileTree xmlFiles = fileTree(dir: 'src/main/resources', include: '**/*.xml')
+
+        xmlFiles.each { xmlFile ->
+            try {
+                def xml = new XmlParser().parse(xmlFile)
+                println "File ${xmlFile.name} is valid XML."
+            } catch (Exception e) {
+                throw new GradleException("Validation failed for file ${xmlFile.name}: ${e.message}", e)
+            }
+        }
+    }
+}
+
+// task convertToNative2Ascii {
+//     inputs.files fileTree('src/main/resources') // Входные файлы
+//     outputs.dir 'src/main/resources-ascii' // Выходная директория
+
+//     doLast {
+//         def srcDir = 'src/main/resources'
+//         def destDir = 'src/main/resources-ascii'
+
+//         // Создаем выходную директорию, если ее нет
+//         // destDir.mkdirs()
+
+//         // Получаем список всех файлов в исходной директории
+//         fileTree(srcDir).each { file ->
+//             // Имя файла без расширения
+//             def fileName = file.name.replaceAll(/\.xml$/, '.properties')
+
+//             // Преобразуем файл в формат native2ascii
+//             def asciiFile = new File("${destDir}/${fileName}")
+//             asciiFile.withWriter { writer ->
+//                 file.eachLine { line ->
+//                     writer.write(line.getBytes('ISO-8859-1').encodeHex().toString() + '\n')
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// // Добавляем задачу convertToNative2Ascii в цепочку сборки (build) и компиляции (compileJava)
+// compileJava.dependsOn convertToNative2Ascii
+// build.dependsOn convertToNative2Ascii
+
+
+
+
+
+
 ssh.settings {
     identity = new File('C:\\users\\byrybdyk\\.ssh\\id_rsa')
 }

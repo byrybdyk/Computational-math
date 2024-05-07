@@ -1,12 +1,17 @@
 package com.example.webmath.controller;
 
+import com.example.webmath.util.Native2ascii;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.webmath.util.ValidateFile;
+import com.example.webmath.util.Native2ascii;
+
 import java.io.*;
+import java.util.List;
 
 @RestController
 public class PythonController {
@@ -29,7 +34,6 @@ public class PythonController {
                 scriptPath = "/home/byrybdyk/back/lb2/main.py";
                 launchCommand = "python3";
             }
-            ///root/back/test.py
             // Создаем объект ProcessBuilder для запуска Python скрипта
             ProcessBuilder processBuilder = new ProcessBuilder(launchCommand, scriptPath, type, quation, method, leftBorder, rightBorder,inaccuary);
             // Запускаем процесс
@@ -43,12 +47,17 @@ public class PythonController {
                 output.append(line).append("\n");
             }
 
+            
+
+
             // Ждем завершения процесса и получаем его код возврата
             int exitCode = process.waitFor();
             System.out.println(output.toString());
             System.out.println(scriptPath);
             // Возвращаем результат выполнения скрипта и его код возврата
             return output.toString();
+
+            
 
         } catch (IOException | InterruptedException e) {
 //            e.printStackTrace();
@@ -92,6 +101,13 @@ public class PythonController {
             int exitCode = process.waitFor();
             System.out.println(output.toString());
             System.out.println(scriptPath);
+
+            Native2ascii nativeReader = new Native2ascii();
+            List<String> lines = nativeReader.read();
+            for (String line1 : lines) {
+                System.out.println(line1);
+            }
+
             // Возвращаем результат выполнения скрипта и его код возврата
             return output.toString();
 

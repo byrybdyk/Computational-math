@@ -1,0 +1,4 @@
+file=Файл
+view=Вид
+project=Проект
+help=Справка
