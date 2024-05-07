@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import DesmosGraph from "./Desmos_graph";
 import SaveToFileButton from "./SaveToFileButton";
 function LB4Page() {
+  // const url = "dr-chainsaw.ru";
+  const url = "localhost:8080";
   const [pairs, setPairs] = useState({
     pair1: "",
     pair2: "",
@@ -101,8 +103,6 @@ function LB4Page() {
     return true;
   }
   const [response, setResponse] = useState("");
-  // const url = "dr-chainsaw.ru";
-  const url = "localhost:8080";
   const fetchData = async () => {
     const lbname = 4;
     if (validatePairs()) {

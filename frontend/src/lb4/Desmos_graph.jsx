@@ -7,7 +7,7 @@ function DesmosGraph({ Fx, pairs }) {
   useEffect(() => {
     // alert(Fx);
     let quations = Fx.split("zz");
-    alert(quations[4]);
+    // alert(quations[4]);
     const calculator = Desmos.GraphingCalculator(desmosContainerRef.current);
     // calculator.setOptions({ expressions: false });
     let minX = 99999;

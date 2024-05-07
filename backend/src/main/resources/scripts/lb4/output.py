@@ -101,5 +101,6 @@ def find_best_method(answers):
         try:
             if answer[0] == min:
                 print(f"Best quation is {answer[2]} with S2 = {answer[0]}")
+                break
         except TypeError:
             continue
