@@ -17,7 +17,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Build with Gradle
-        run: cd backend && ./gradlew build
+        run: cd backend && ./gradlew bootJar
 
   build-static:
     runs-on: ubuntu-latest
