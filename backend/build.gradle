@@ -20,17 +20,26 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation('junit:junit:4.13.1')
     implementation 'org.apache.xmlbeans:xmlbeans:5.1.0'
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testImplementation 'org.junit.platform:junit-platform-console-standalone:1.10.2'
+
 }
 
 
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+
+
 }
 task playMusic {
     doLast {
