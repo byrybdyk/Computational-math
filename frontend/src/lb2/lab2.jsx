@@ -12,9 +12,9 @@ import Desmos_system_graph from "../components/Desmos_system_graph";
 // import Desmos from '../components/Desmos_graph';
 
 function LB2Page() {
-  const url = "dr-chainsaw.ru";
+  // const url = "dr-chainsaw.ru";
 
-  // const url = "localhost:8080";
+  const url = "localhost:8080";
 
   const [checked, setChecked] = useState(false);
 

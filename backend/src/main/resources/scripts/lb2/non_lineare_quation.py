@@ -37,6 +37,13 @@ def half_division_method(quation, method):
     count_roots = count_roots_on_interval(quation, a, b, 0.001) 
     if not (validate_roots(count_roots)):
         exit()
+        
+    
+    # a = int(sys.argv[4])
+    # b = int(sys.argv[5])
+    # inaccuracy = int(sys.argv[6])
+    a1 =a
+    b1 = b
     
     iterations = 0
     max_iter = 1000
@@ -57,6 +64,8 @@ def half_division_method(quation, method):
     print(f"Answer = {solution}")
     print(f"f(answer) = {quation_solution(quation, solution)}")
     print(f"Iterations = {iterations}")
+    # output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    # draw_grapth(quation, str_quation(quation), a1, b1)
     
 def Newton_method(quation, method):
     a = try_to_convert_to_int(sys.argv[4])
@@ -85,8 +94,11 @@ def Newton_method(quation, method):
     print(f"f(answer) = {quation_solution(quation, solution)}")
     print(f"Iterations = {iterations}")
     
+    # output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    # draw_grapth(quation, str_quation(quation), a, b)
     
 def Simple_iteration_method(quation, method):
+    # a, b, inaccuary = input_selection(quation,method)
     a = try_to_convert_to_int(sys.argv[4])
     b = try_to_convert_to_int(sys.argv[5])
     inaccuary = try_to_convert_to_int(sys.argv[6])
@@ -97,6 +109,8 @@ def Simple_iteration_method(quation, method):
     count_roots = count_roots_on_interval(quation, a, b, 0.001) 
     if not (validate_roots(count_roots)):
         exit()
+    # lambda_L = -1/(max(abs(quation_df_solution(quation,a)), abs(quation_df_solution(quation,b))))
+    # print("L = ",lambda_L)
     q = check_convergencecondition(quation, a, b)
     approximation = validate_initial_approximation(quation, a, b)
     x = approximation
@@ -108,6 +122,7 @@ def Simple_iteration_method(quation, method):
     if( 0< q <= 0.5):
         while abs(converted_quation(quation,x)-x) > inaccuary and iterations < max_iter:
             x = converted_quation(quation,x)
+            # print(x)
             iterations += 1
     if(0.5 <q <=1):
         while abs(converted_quation(quation,x)-x) > inaccuary and iterations < max_iter:
@@ -118,6 +133,8 @@ def Simple_iteration_method(quation, method):
     print(f"Answer = {solution}")
     print(f"f(answer) = {quation_solution(quation, solution)}")
     print(f"Iterations = {iterations}")
+    # output_data(solution, quation_solution(quation, solution), iterations, str_quation(quation))
+    # draw_grapth(quation, str_quation(quation), a, b)
 
 
 def non_lineare_quation():

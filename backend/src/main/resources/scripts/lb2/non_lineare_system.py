@@ -94,3 +94,16 @@ def f2_dy(system, x, y):
     else:
         print("System out of choice")
         exit()
+# def f1_new(system,x,y):
+    
+#     return x + ((-1)/max(abs(f1_dx(system,x,y),abs(f1_dy(system,x,y)))))*f1(system,x,y)
+    
+        
+# def f1_simple(system,x,y):
+#     if system == 1:
+#         return 
+#     elif system == 2:
+#         return np.sin(2*x)
+#     else:
+#         print("System out of choice")
+#         exit()
