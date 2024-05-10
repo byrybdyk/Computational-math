@@ -16,6 +16,10 @@ jobs:
           java-version: 17
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12.2' 
       - name: Build with Gradle
         run: cd backend && ./gradlew bootJar
       - name: Run Junit test

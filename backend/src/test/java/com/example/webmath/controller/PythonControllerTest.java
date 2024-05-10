@@ -27,7 +27,7 @@ public class PythonControllerTest {
                         scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb4\\main.py";
                         launchCommand = "python";
                     } else {
-                        scriptPath = "/home/byrybdyk/back/lb4/main.py";
+                        scriptPath = "../../main/resources/scripts/lb4/main.py";
                         launchCommand = "python3";
                     }
 
@@ -62,7 +62,7 @@ public class PythonControllerTest {
                         scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb3\\main.py";
                         launchCommand = "python";
                     } else {
-                        scriptPath = "/home/byrybdyk/back/lb3/main.py";
+                        scriptPath = "../../main/resources/scripts/lb3/main.py";
                         launchCommand = "python3";
                     }
                     ProcessBuilder processBuilder = new ProcessBuilder(launchCommand, scriptPath, quation, method, leftBorder, rightBorder,inaccuary, parts);
@@ -96,7 +96,7 @@ public class PythonControllerTest {
                         scriptPath = currentDir + "\\src\\main\\resources\\scripts\\lb2\\main.py";
                         launchCommand = "python";
                     } else {
-                        scriptPath = "/home/byrybdyk/back/lb2/main.py";
+                        scriptPath = "../../main/resources/scripts/lb2/main.py";
                         launchCommand = "python3";
                     }
                     ProcessBuilder processBuilder = new ProcessBuilder(launchCommand, scriptPath, type, quation, method, leftBorder, rightBorder,inaccuary);
