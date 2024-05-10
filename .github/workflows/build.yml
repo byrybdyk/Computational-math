@@ -19,7 +19,7 @@ jobs:
       - name: Build with Gradle
         run: cd backend && ./gradlew bootJar
       - name: Run Junit test
-        run: cd backend && ./gradlew clean build test
+        run: cd backend && ./gradlew clean build test && cat /home/runner/work/Computational-math/Computational-math/backend/build/reports/tests/test/index.html
 
   build-static:
     runs-on: ubuntu-latest
