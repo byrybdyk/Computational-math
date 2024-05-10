@@ -116,6 +116,7 @@ task report {
 }
 
 
+
 tasks.withType(JavaCompile) {
     doFirst {
         // Сохраняем результат компиляции в переменной compileResult
