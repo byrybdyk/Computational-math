@@ -98,7 +98,51 @@ task validateXmlFiles {
 // // Добавляем задачу convertToNative2Ascii в цепочку сборки (build) и компиляции (compileJava)
 // compileJava.dependsOn convertToNative2Ascii
 // build.dependsOn convertToNative2Ascii
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
+task report {
+    dependsOn test
+
+    doLast {
+        def testReportFolder = file("$buildDir/reports/tests/test/")
+
+        if (testReportFolder.exists()) {
+            def destinationFolder = file("$projectDir/reports/")
+
+            destinationFolder.mkdirs()
+
+            Files.walk(Paths.get(testReportFolder.toURI())).forEach { path ->
+                def relativePath = testReportFolder.toPath().relativize(path)
+                def destinationPath = destinationFolder.toPath().resolve(relativePath)
+                if (!Files.exists(destinationPath)) {
+                    Files.createDirectories(destinationPath)
+                }
+                if (!Files.isDirectory(path)) {
+                    try {
+                        Files.copy(path, destinationPath, StandardCopyOption.REPLACE_EXISTING)
+                    } catch (IOException e) {
+                        println "Failed to copy file: ${e.message}"
+                    }
+                }
+            }
+            exec {
+                commandLine 'git', 'add', '.'
+                workingDir destinationFolder
+            }
+
+            exec {
+                commandLine 'git', 'commit', '-m', 'Add test reports'
+                workingDir destinationFolder
+            }
+
+            println "Test reports copied successfully."
+        } else {
+            println "Test report folder does not exist: ${testReportFolder}"
+        }
+    }
+}
 
 
 
