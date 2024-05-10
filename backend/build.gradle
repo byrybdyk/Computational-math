@@ -42,6 +42,7 @@ test {
 
 }
 task playMusic {
+    dependsOn build
     doLast {
         String audioFilePath = 'C:\\sound.mp3'
 
@@ -51,7 +52,6 @@ task playMusic {
     }
 }
 
-build.finalizedBy(playMusic)
 
 task validateXmlFiles {
     doLast {
