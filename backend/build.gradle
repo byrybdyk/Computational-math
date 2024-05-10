@@ -206,7 +206,7 @@ task history {
                     exec {
                         commandLine 'git', 'diff'
                         workingDir projectDir
-                        standardOutput = new FileOutputStream($projectDir)
+                        standardOutput = new FileOutputStream(projectDir)
                     }
                     // Ждем некоторое время перед следующей попыткой
                     TimeUnit.SECONDS.sleep(5)

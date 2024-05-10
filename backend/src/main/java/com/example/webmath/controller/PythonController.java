@@ -14,7 +14,7 @@ import java.io.*;
 import java.util.List;
 
 @RestController
-// public class PythonController {
+public class PythonController {
 
     @GetMapping("api/run-python-script")
     public String runPythonScript(@RequestParam("lbname") String lbname, @RequestParam("type") String type,
