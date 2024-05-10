@@ -145,6 +145,93 @@ task report {
 }
 
 
+tasks.withType(JavaCompile) {
+    doFirst {
+        // Сохраняем результат компиляции в переменной compileResult
+        project.ext.compileResult = didWork
+    }
+}
+task history {
+    // dependsOn compileJava
+    doLast {
+        def success = false
+        try {
+            exec {
+            workingDir projectDir
+            commandLine 'cmd', '/c', 'gradlew', 'compileJava'
+            }
+            success = true
+        } catch (Exception e) {
+            println "Compile error: ${e.message}"
+            success = false
+        }
+        println "Compile result: $success"
+        if (!success) {
+            // Максимальное количество попыток загрузки предыдущей версии из репозитория git
+            // Путь к файлу, в который будет записан результат операции diff
+            def diffFile = file("$buildDir/diff.txt")
+
+            // Счетчик попыток
+            // Флаг, указывающий, была ли успешно загружена предыдущая версия
+            def successfullyLoaded = false
+
+            // Запускаем цикл попыток
+            while (!successfullyLoaded) {
+
+                // Загружаем предыдущую версию из репозитория git
+                exec {
+                    commandLine 'git', 'checkout', 'HEAD~1'
+                    // Рабочая директория для команды git
+                    workingDir projectDir
+                    // Игнорируем ошибку, если HEAD~1 не существует
+                    ignoreExitValue true
+                }
+
+                // Проверяем, удалось ли скомпилировать проект
+                try {
+                    exec {
+                    orkingDir projectDir
+                    commandLine 'cmd', '/c', 'gradlew', 'compileJava'
+                    }
+                    success = true
+                } catch (Exception e) {
+                    success = false
+                }
+                if (!success) {
+                    // Проект не удалось скомпилировать
+                    println "Failed to compile project, retrying..."
+
+                    
+
+                    exec {
+                        commandLine 'git', 'diff'
+                        workingDir projectDir
+                        standardOutput = new FileOutputStream($projectDir)
+                    }
+                    // Ждем некоторое время перед следующей попыткой
+                    TimeUnit.SECONDS.sleep(5)
+                }
+
+                    
+                else {
+                    // Проект успешно скомпилирован
+                    println "Project compiled successfully, diff in ${diffFile}"
+                    successfullyLoaded = true
+                }
+                
+            }
+
+            // Если проект не удалось скомпилировать и была получена самая первая ревизия из репозитория, выходим с ошибкой
+
+        }
+        else{
+            println "Project compiled successfully, no need to load previous revision"
+        }
+    }
+}
+
+
+
 
 
 
