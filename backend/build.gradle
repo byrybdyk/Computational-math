@@ -68,36 +68,7 @@ task validateXmlFiles {
     }
 }
 
-// task convertToNative2Ascii {
-//     inputs.files fileTree('src/main/resources') // Входные файлы
-//     outputs.dir 'src/main/resources-ascii' // Выходная директория
 
-//     doLast {
-//         def srcDir = 'src/main/resources'
-//         def destDir = 'src/main/resources-ascii'
-
-//         // Создаем выходную директорию, если ее нет
-//         // destDir.mkdirs()
-
-//         // Получаем список всех файлов в исходной директории
-//         fileTree(srcDir).each { file ->
-//             // Имя файла без расширения
-//             def fileName = file.name.replaceAll(/\.xml$/, '.properties')
-
-//             // Преобразуем файл в формат native2ascii
-//             def asciiFile = new File("${destDir}/${fileName}")
-//             asciiFile.withWriter { writer ->
-//                 file.eachLine { line ->
-//                     writer.write(line.getBytes('ISO-8859-1').encodeHex().toString() + '\n')
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// // Добавляем задачу convertToNative2Ascii в цепочку сборки (build) и компиляции (compileJava)
-// compileJava.dependsOn convertToNative2Ascii
-// build.dependsOn convertToNative2Ascii
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
@@ -155,6 +126,8 @@ task history {
     // dependsOn compileJava
     doLast {
         def success = false
+        def diffResult = ""
+        def outputStream
         try {
             exec {
             workingDir projectDir
@@ -180,21 +153,29 @@ task history {
 
                 // Загружаем предыдущую версию из репозитория git
                 exec {
-                    commandLine 'git', 'checkout', 'HEAD~1'
+                    commandLine 'git', 'reset','--hard','HEAD'
                     // Рабочая директория для команды git
                     workingDir projectDir
                     // Игнорируем ошибку, если HEAD~1 не существует
                     ignoreExitValue true
                 }
-
+                outputStream = new ByteArrayOutputStream()
+                    exec {
+                        
+                        commandLine 'git', 'diff'
+                        workingDir projectDir
+                        standardOutput = outputStream
+                    }
+                    diffResult = outputStream.toString()
                 // Проверяем, удалось ли скомпилировать проект
                 try {
                     exec {
-                    orkingDir projectDir
+                    workingDir projectDir
                     commandLine 'cmd', '/c', 'gradlew', 'compileJava'
                     }
                     success = true
                 } catch (Exception e) {
+                    println "Compile error: ${e.message}"
                     success = false
                 }
                 if (!success) {
@@ -202,14 +183,7 @@ task history {
                     println "Failed to compile project, retrying..."
 
                     
-
-                    exec {
-                        commandLine 'git', 'diff'
-                        workingDir projectDir
-                        standardOutput = new FileOutputStream(projectDir)
-                    }
-                    // Ждем некоторое время перед следующей попыткой
-                    TimeUnit.SECONDS.sleep(5)
+                    
                 }
 
                     
@@ -217,6 +191,8 @@ task history {
                     // Проект успешно скомпилирован
                     println "Project compiled successfully, diff in ${diffFile}"
                     successfullyLoaded = true
+                    def outputFile = new File("diff.txt")
+                    outputFile.write(diffResult)
                 }
                 
             }
@@ -226,6 +202,7 @@ task history {
         }
         else{
             println "Project compiled successfully, no need to load previous revision"
+            
         }
     }
 }
