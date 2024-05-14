@@ -104,7 +104,14 @@ html {
   padding-left: 5%;
   flex-direction: column;
 }
-
+.quation-containerLB5 {
+  display: flex;
+  /* align-items: left; */
+  margin-top: 4%;
+  margin-bottom: 4%;
+  padding-left: 5%;
+  flex-direction: column;
+}
 .quation-container button {
   margin-bottom: 2%;
   color: black;
@@ -118,7 +125,20 @@ html {
   /* max-height: 10%; */
   /* background-color:red; */
 }
-
+.quation-containerLB5 button {
+  margin-top: 10%;
+  margin-bottom: 2%;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s linear;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 32px;
+  color: #fff;
+  /* max-width: 100%; */
+  /* max-height: 10%; */
+  /* background-color:red; */
+}
 .method-container {
   display: flex;
   /* align-items: left; */
