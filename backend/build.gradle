@@ -119,12 +119,10 @@ task report {
 
 tasks.withType(JavaCompile) {
     doFirst {
-        // Сохраняем результат компиляции в переменной compileResult
         project.ext.compileResult = didWork
     }
 }
 task history {
-    // dependsOn compileJava
     doLast {
         def success = false
         def diffResult = ""
@@ -144,15 +142,10 @@ task history {
         }
         println "Compile result: $success"
         if (!success) {
-            // Максимальное количество попыток загрузки предыдущей версии из репозитория git
-            // Путь к файлу, в который будет записан результат операции diff
             def diffFile = file("$buildDir/diff.txt")
 
-            // Счетчик попыток
-            // Флаг, указывающий, была ли успешно загружена предыдущая версия
             def successfullyLoaded = false
 
-            // Запускаем цикл попыток
             while (!successfullyLoaded) {
 
                 if(count ==0){
@@ -167,9 +160,7 @@ task history {
                     count = 1
                     exec {
                         commandLine 'git', 'reset','--hard',commit
-                        // Рабочая директория для команды git
                         workingDir projectDir
-                        // Игнорируем ошибку, если HEAD~1 не существует
                         ignoreExitValue true
                     }
                 }
@@ -183,16 +174,12 @@ task history {
                     diffResult = outputStream.toString()
                         exec {
                         commandLine 'git', 'reset','--hard', prevCommit
-                        // Рабочая директория для команды git
                         workingDir projectDir
-                        // Игнорируем ошибку, если HEAD~1 не существует
                         ignoreExitValue true
                     }
                     
                 }
-                // Загружаем предыдущую версию из репозитория git
                 
-                // Проверяем, удалось ли скомпилировать проект
                 try {
                     exec {
                     workingDir projectDir
@@ -204,7 +191,6 @@ task history {
                     success = false
                 }
                 if (!success) {
-                    // Проект не удалось скомпилировать
                     println "Failed to compile project, retrying..."
                     commit = prevCommit
                     prevCommit += '^'
@@ -215,7 +201,6 @@ task history {
 
                     
                 else {
-                    // Проект успешно скомпилирован
                     println "Project compiled successfully, diff in ${diffFile}"
                     successfullyLoaded = true
                     def outputFile = new File("diff.txt")
@@ -224,7 +209,6 @@ task history {
                 
             }
 
-            // Если проект не удалось скомпилировать и была получена самая первая ревизия из репозитория, выходим с ошибкой
 
         }
         else{
@@ -292,17 +276,13 @@ task deployJar {
     doLast {
         ssh.run {
             session(remotes.webServer) {
-                // Execute a command
-//                def result = execute 'sudo service status'
 
-                // Any Gradle methods or properties are available in a session closure
                 copy {
-                    from "D:\\GIT\\Computational-math\\WebMathbuild\\libs\\WebMath-0.0.1-SNAPSHOT.jar"
-                    into "/home/byrybdyk/deploy"
+                    from "D:\\GIT\\Computational-math\\backend\\build\\libs\\WebMath-0.0.1-SNAPSHOT.jar"
+                    into "/home/byrybdyk/deploytest/"
                 }
 
-                put from: 'D:\\GIT\\Computational-math\\WebMath\\build\\libs\\WebMath-0.0.1-SNAPSHOT.jar', into:'/home/byrybdyk/deploy'
-                // Also Groovy methods or properties are available in a session closure
+                put from: "D:\\GIT\\Computational-math\\backend\\build\\libs\\WebMath-0.0.1-SNAPSHOT.jar", into:'/home/byrybdyk/deploy/test'
             }
         }
     }
