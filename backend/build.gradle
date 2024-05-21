@@ -130,7 +130,6 @@ task history {
         def diffResult = ""
         def outputStream
         def count =0
-        def main_commit = 'HEAD'
         def commit = 'HEAD'
         def prevCommit = commit + '^'
         try {
@@ -194,6 +193,16 @@ task history {
                 // Загружаем предыдущую версию из репозитория git
                 
                 // Проверяем, удалось ли скомпилировать проект
+                try {
+                    exec {
+                    workingDir projectDir
+                    commandLine 'cmd', '/c', 'gradlew', 'compileJava'
+                    }
+                    success = true
+                } catch (Exception e) {
+                    println "Compile error: ${e.message}"
+                    success = false
+                }
                 if (!success) {
                     // Проект не удалось скомпилировать
                     println "Failed to compile project, retrying..."
@@ -209,18 +218,8 @@ task history {
                     // Проект успешно скомпилирован
                     println "Project compiled successfully, diff in ${diffFile}"
                     successfullyLoaded = true
-
                     def outputFile = new File("diff.txt")
                     outputFile.write(diffResult)
-
-                    // exec {
-                    //     commandLine 'git', 'reset','--hard', main_commit
-                    //     // Рабочая директория для команды git
-                    //     workingDir projectDir
-                    //     // Игнорируем ошибку, если HEAD~1 не существует
-                    //     ignoreExitValue true
-                    // }
-                    // println "Return to main branch ${main_commit}"
                 }
                 
             }
