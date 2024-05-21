@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Native2ascii {
     public List<String> read() {
-        String filePath = "src/main/resources/badText.conf";
+        String filePath = "src/main/resources/asciiNew/badText.properties";
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

@@ -130,6 +130,7 @@ task history {
         def diffResult = ""
         def outputStream
         def count =0
+        def main_commit = 'HEAD'
         def commit = 'HEAD'
         def prevCommit = commit + '^'
         try {
@@ -193,16 +194,6 @@ task history {
                 // Загружаем предыдущую версию из репозитория git
                 
                 // Проверяем, удалось ли скомпилировать проект
-                try {
-                    exec {
-                    workingDir projectDir
-                    commandLine 'cmd', '/c', 'gradlew', 'compileJava'
-                    }
-                    success = true
-                } catch (Exception e) {
-                    println "Compile error: ${e.message}"
-                    success = false
-                }
                 if (!success) {
                     // Проект не удалось скомпилировать
                     println "Failed to compile project, retrying..."
@@ -218,8 +209,18 @@ task history {
                     // Проект успешно скомпилирован
                     println "Project compiled successfully, diff in ${diffFile}"
                     successfullyLoaded = true
+
                     def outputFile = new File("diff.txt")
                     outputFile.write(diffResult)
+
+                    // exec {
+                    //     commandLine 'git', 'reset','--hard', main_commit
+                    //     // Рабочая директория для команды git
+                    //     workingDir projectDir
+                    //     // Игнорируем ошибку, если HEAD~1 не существует
+                    //     ignoreExitValue true
+                    // }
+                    // println "Return to main branch ${main_commit}"
                 }
                 
             }
@@ -233,6 +234,44 @@ task history {
         }
     }
 }
+
+task native2ascii {
+    def inputDir = file('src/main/resources/asciiOld')
+    def outputDir = file('src/main/resources/asciiNew/')
+
+    doLast {
+        ant.native2ascii(
+            src : project.file(inputDir),
+            dest : project.file(outputDir) 
+        )
+    }
+}
+
+task env {
+    // Версия Java
+    def javaVersion = "17" // Здесь можно указать нужную версию Java
+
+    // Аргументы виртуальной машины
+    def jvmArg1 = "-Xmx1024m" // Пример аргументов
+
+    def jvmArg2 = "-Xms256m"
+
+    doLast {
+        // Определяем путь к исполняемому файлу Java
+        def javaExec = "\"C:\\Program Files\\Java\\jdk-${javaVersion}\\bin\\java.exe\""
+        println("Java executable: ${javaExec}")
+
+
+        exec {
+            workingDir projectDir
+            // Используем call для корректного запуска пути с пробелами
+            commandLine 'cmd', '/c', 'call', javaExec,'-jar', jvmArg1,jvmArg2, 'build/libs/WebMath-0.0.1-SNAPSHOT.jar'
+        }
+    }
+}
+
+
+
 
 
 
