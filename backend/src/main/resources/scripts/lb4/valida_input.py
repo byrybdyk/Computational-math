@@ -4,7 +4,7 @@ import sys
 def validate_pairs():
     pairs = []
     try:
-        for arg in sys.argv[1:9]:
+        for arg in sys.argv[2:9]:
             x, y = map(float, arg.replace(",", ".").split(" "))
             pair = [x, y]
             pairs.append(pair)
