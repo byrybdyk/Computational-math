@@ -13,6 +13,27 @@ def input_num_dots():
     return num_dots
 
 
+def read_dots():
+    pairs = []
+    try:
+        for arg in sys.argv[7:8]:
+            x, y = map(float, arg.replace(",", ".").split(" "))
+            pair = [x, y]
+            pairs.append(pair)
+
+        for arg in sys.argv[8:]:
+            if arg.strip():
+                x, y = map(float, arg.replace(",", ".").split(" "))
+                pair = [x, y]
+                pairs.append(pair)
+            else:
+                continue
+    except ValueError:
+        print("Incorrect value entered")
+        exit()
+    return pairs
+
+
 def input_borders():
     left_border = float(sys.argv[3])
     right_border = float(sys.argv[4])
@@ -24,3 +45,29 @@ def input_borders():
 
 def input_quation():
     return int(sys.argv[2])
+
+
+def input_x():
+    return float(sys.argv[6])
+
+
+def read_from_file():
+    pairs = []
+    x = float(sys.argv[1])
+    try:
+        for arg in sys.argv[2:3]:
+            x, y = map(float, arg.replace(",", ".").split(" "))
+            pair = [x, y]
+            pairs.append(pair)
+
+        for arg in sys.argv[3:]:
+            if arg.strip():
+                x, y = map(float, arg.replace(",", ".").split(" "))
+                pair = [x, y]
+                pairs.append(pair)
+            else:
+                continue
+    except ValueError:
+        print("Incorrect value entered")
+        exit()
+    return pairs, x

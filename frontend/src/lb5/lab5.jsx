@@ -53,7 +53,7 @@ function LB5Page() {
       formData.append("file", file);
 
       try {
-        const response = await fetch(`http://${url}/api/send-file-lb4`, {
+        const response = await fetch(`http://${url}/api/send-file-lb5`, {
           method: "POST",
           body: formData,
         });
@@ -62,7 +62,7 @@ function LB5Page() {
           const data = await response.text();
           let [firstPart, rest] = splitFirstLine(data);
           setFirstLine(firstPart);
-          setResponse(rest);
+          setResponse(data);
           console.log("Файл успешно загружен!");
         } else {
           console.error(
@@ -148,6 +148,15 @@ function LB5Page() {
     setDots(value); // Обновляем состояние
   };
 
+  const [X, setX] = useState("");
+  const handleChangeX = (event) => {
+    let value = event.target.value; // Получаем значение из поля ввода
+    if (value.length > 5) {
+      value = value.slice(0, 5);
+    }
+    setX(value); // Обновляем состояние
+  };
+
   const fetchData = async () => {
     const lbname = 5;
     try {
@@ -164,12 +173,12 @@ function LB5Page() {
       }
       try {
         const response = await fetch(
-          `http://${url}/api/run-python-script_lb${lbname}?type=${checked}&quation=${selectedQuation}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&dots=${dots}&pair1=${pairs.pair1}&pair2=${pairs.pair2}&pair3=${pairs.pair3}&pair4=${pairs.pair4}&pair5=${pairs.pair5}&pair6=${pairs.pair6}&pair7=${pairs.pair7}&pair8=${pairs.pair8}&pair9=${pairs.pair9}&pair10=${pairs.pair10}&pair11=${pairs.pair11}&pair12=${pairs.pair12}`
+          `http://${url}/api/run-python-script_lb${lbname}?type=${checked}&quation=${selectedQuation}&leftBorder=${leftBorder}&rightBorder=${rightBorder}&dots=${dots}&X=${X}&pair1=${pairs.pair1}&pair2=${pairs.pair2}&pair3=${pairs.pair3}&pair4=${pairs.pair4}&pair5=${pairs.pair5}&pair6=${pairs.pair6}&pair7=${pairs.pair7}&pair8=${pairs.pair8}&pair9=${pairs.pair9}&pair10=${pairs.pair10}&pair11=${pairs.pair11}&pair12=${pairs.pair12}`
         );
         const data = await response.text();
         let [firstPart, rest] = splitFirstLine(data);
         setFirstLine(firstPart);
-        setResponse(rest);
+        setResponse(data);
       } catch (error) {
         console.error("Ошибка при получении данных:", error);
       }
@@ -305,6 +314,16 @@ function LB5Page() {
                       style={{ color: "white" }}
                     />
                   </label>
+                  <label>
+                    <input
+                      type="number"
+                      maxLength="5"
+                      placeholder="x"
+                      value={X}
+                      onChange={handleChangeX}
+                      style={{ color: "white" }}
+                    />
+                  </label>
                 </div>
               </div>
             </Typography>
@@ -416,6 +435,16 @@ function LB5Page() {
                     placeholder="12'th coordinates"
                     value={pairs.pair12}
                     onChange={handleChangePair12}
+                    style={{ color: "white" }}
+                  />
+                </label>
+                <label>
+                  <input
+                    type="number"
+                    maxLength="5"
+                    placeholder="x"
+                    value={X}
+                    onChange={handleChangeX}
                     style={{ color: "white" }}
                   />
                 </label>
