@@ -37,6 +37,8 @@ def newton_divided_difference_polynomial(dots, n):
     xs = [dot[0] for dot in dots]
     ys = [dot[1] for dot in dots]
     coef = divided_differences(dots)
+    for cef in coef:
+        print(cef)
     return lambda x: ys[0] + sum(
         [
             coef[k] * reduce(lambda a, b: a * b, [x - xs[j] for j in range(k)])
@@ -70,14 +72,23 @@ def newton_finite_difference_polynomial(dots, n):
     h = xs[1] - xs[0]
 
     delta_y = finite_differences(dots)
-    return lambda x: ys[0] + sum(
-        [
-            reduce(lambda a, b: a * b, [(x - xs[0]) / h - j for j in range(k)])
-            * delta_y[k, 0]
-            / factorial(k)
-            for k in range(1, n)
-        ]
-    )
+    coefficients = [delta_y[0][0]] + [
+        delta_y[0][k] / factorial(k) for k in range(1, len(dots))
+    ]
+    for cef in coefficients:
+        print(cef)
+
+    def polynomial_function(x):
+        return ys[0] + sum(
+            [
+                reduce(lambda a, b: a * b, [(x - xs[0]) / h - j for j in range(k)])
+                * delta_y[0][k]
+                / factorial(k)
+                for k in range(1, len(dots))
+            ]
+        )
+
+    return coefficients, polynomial_function
 
 
 def gauss_polynomial(dots, n):
