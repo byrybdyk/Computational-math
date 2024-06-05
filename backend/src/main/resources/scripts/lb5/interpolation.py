@@ -2,6 +2,7 @@ from functools import reduce
 from math import factorial
 import numpy as np
 from input_output import *
+import inspect
 import sys
 
 
@@ -268,6 +269,7 @@ def interpolation_coordinates():
 
 # Основная функция решения
 def solve(dots, x, n):
+    otput = []
     delta_y = finite_differences(dots)
     print_finite_differences_table(delta_y)
 
@@ -319,5 +321,6 @@ def solve(dots, x, n):
 
         print(name)
         P = method(dots, n)
+        # print(inspect.getsource(P))
         print(f"P({x}) = {P(x)}")
         print()
