@@ -1,4 +1,5 @@
 import os
+from matplotlib import pyplot as plt
 
 
 def try_to_convert_to_int(number):
@@ -49,9 +50,9 @@ def pairs_from_function():
 
 def fun(quation, x):
     if quation == 1:
-        return x**2 - 3 * x + 2
+        return x**2 - 2
     elif quation == 2:
-        return x**3 + 2 * x**2 - 5
+        return x**3 + 1
     else:
         return x
 
@@ -180,7 +181,7 @@ def choose_quation():
     while True:
         try:
             print("Choose the quation:")
-            input_quation = int(input("1) x^2 - 3x + 2 \n2) x^3 + 2x^2 - 5\n3) x\n"))
+            input_quation = int(input("1) x^2 -2\n2) x^3+1\n3) x\n"))
             if input_quation in range(1, 4):
                 break
             print("Invalid command")
@@ -234,3 +235,27 @@ def pairs_input_file():
     else:
         print("Incorrect X in the specified file")
         exit()
+
+
+def draw_plot(a, b, func, name, dx=0.001):
+    xs, ys = [], []
+    a -= dx
+    b += dx
+    x = a
+    while x <= b:
+        xs.append(x)
+        ys.append(func(x))
+        x += dx
+    plt.plot(xs, ys, color="black", label=name)
+
+
+def plot(name, xs, ys, P, x):
+    plt.title(name)
+    draw_plot(xs[0], xs[-1], P, name)
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.scatter(x, P(x), c="red")
+    for i in range(len(xs)):
+        plt.scatter(xs[i], ys[i], c="blue")
+
+    plt.show()

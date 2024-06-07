@@ -2,7 +2,6 @@ from functools import reduce
 from math import factorial
 import numpy as np
 from input_output import *
-from plotting import plot
 
 
 def interpolation():
@@ -12,7 +11,6 @@ def interpolation():
     solve(dots, x, n)
 
 
-# Функции для интерполяции
 def lagrange_polynomial(xs, ys, n):
     return lambda x: sum(
         [
@@ -55,26 +53,34 @@ def finite_differences(y):
     return delta_y
 
 
+def newton_finite_difference_polynomial(xs, ys, n_temp):
+    n = len(xs)
+    divided_diffs = [[0] * n for _ in range(n)]
+    for i in range(n):
+        divided_diffs[i][0] = ys[i]
+    for j in range(1, n):
+        for i in range(n - j):
+            divided_diffs[i][j] = (
+                divided_diffs[i + 1][j - 1] - divided_diffs[i][j - 1]
+            ) / (xs[i + j] - xs[i])
+
+    def interpolation_polynomial(x):
+        result = divided_diffs[0][0]
+        temp = 1
+        for i in range(1, n):
+            temp *= x - xs[i - 1]
+            result += divided_diffs[0][i] * temp
+        return result
+
+    return interpolation_polynomial
+
+
 def print_finite_differences_table(delta_y):
     n = delta_y.shape[0]
     print("Finite difference table:")
     for i in range(n):
         row = [f"{delta_y[i, j]:.4f}" if i + j < n else "" for j in range(n)]
         print("\t".join(row))
-
-
-def newton_finite_difference_polynomial(xs, ys, n):
-    h = xs[1] - xs[0]
-
-    delta_y = finite_differences(ys)
-    return lambda x: ys[0] + sum(
-        [
-            reduce(lambda a, b: a * b, [(x - xs[0]) / h - j for j in range(k)])
-            * delta_y[k, 0]
-            / factorial(k)
-            for k in range(1, n)
-        ]
-    )
 
 
 def gauss_polynomial(xs, ys, n):
@@ -157,7 +163,7 @@ def stirling_polynomial(xs, ys, n):
     return lambda x: (f1(x) + f2(x)) / 2
 
 
-def bessel_polynomial(xs, ys, n):
+def bessel_polynomial(xs, ys, n_temp):
     n = len(xs) - 1
     alpha_ind = n // 2
     fin_difs = []
@@ -190,7 +196,6 @@ def bessel_polynomial(xs, ys, n):
     )
 
 
-# Основная функция решения
 def solve(dots, x, n):
     xs = [dot[0] for dot in dots]
     ys = [dot[1] for dot in dots]
